@@ -20,6 +20,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---fonts-->
 		<link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 		<!---fonts-->
 		<!--script-->
 		<script src="js/modernizr.custom.97074.js"></script>
@@ -42,7 +44,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!--script-->
 	</head>
 	<body>
-		<?php include 'header.php'; ?>
+	<?php include 'header.php'; ?>
 			<!--about--->
 					<div class="content">
 						<div class="about-section">

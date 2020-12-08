@@ -1,10 +1,28 @@
-<!--
-Au<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+    session_start();
+	if(isset($_SESSION['userdata'])){
+		header('Location:signout.php');
+	}
+	else{
+			if (!isset($_SESSION['CREATED'])) {
+				$_SESSION['CREATED'] = time();
+			} else if (time() - $_SESSION['CREATED'] > 180) {
+					unset($_SESSION['currentride']);  
+			}
+			include "dbc.php";
+			include "userclass.php";
+			$error= array();
+			$msg="";
+			if(isset($_POST["submit"])){
+				$username=isset($_POST['email'])?$_POST['email']:'';
+				$pass=isset($_POST['pass'])?$_POST['pass']:'';
+				$check=isset($_POST['remember'])?$_POST['remember']:'';
+			
+				$user= new User();
+				$msg=$user->login($username,$pass);
+				
+			} 
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -21,6 +39,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<!---fonts-->
 		<link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 		<!---fonts-->
 		<!--script-->
 		<link rel="stylesheet" href="css/swipebox.css">
@@ -48,17 +68,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<div class="col-md-6 login-right">
 										<h3>registered</h3>
 										<p>If you have an account with us, please log in.</p>
-										<form>
+										<form action="login.php" method="POST">
 										<div>
 											<span>Email Address<label>*</label></span>
-											<input type="text"> 
+											<input type="text" name="email"> 
 										</div>
 										<div>
 											<span>Password<label>*</label></span>
-											<input type="password"> 
+											<input type="password" name="pass"> 
 										</div>
 										<a class="forgot" href="#">Forgot Your Password?</a>
-										<input type="submit" value="Login">
+										<input type="submit" name="submit" value="Login">
 										</form>
 									</div>	
 									<div class="clearfix"> </div>
@@ -172,3 +192,4 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<!---footer--->
 	</body>
 </html>
+<?php } ?>

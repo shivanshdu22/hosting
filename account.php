@@ -1,7 +1,7 @@
 <?php
 
         include "dbc.php";
-        include "uci.php";
+        include "userclass.php";
         $error= array();
         $msg="";
         if(isset($_POST["submit"])){
@@ -10,17 +10,18 @@
             $email=isset($_POST['email'])?$_POST['email']:'';
             $mobile=isset($_POST['mobile'])?$_POST['mobile']:'';
             $pass=isset($_POST['password'])?$_POST['password']:'';
-			$pass2=isset($_POST['password2'])?$_POST['password2']:'';
+			$pass2=isset($_POST['repassword'])?$_POST['repassword']:'';
 			$question=isset($_POST['Question'])?$_POST['Question']:'';
             $ans=isset($_POST['answer'])?$_POST['answer']:'';
+			$name= "".$firstname." ".$lastname."";
 
             if($pass!=$pass2){
-            $msg='Password does not match';
+            	$msg='Password does not match';
             }
             else{
                 $user= new User();
-                $msg=$user->register($username,$name,$mobile,$pass);
-                echo "<script> </script>";
+                $msg=$user->register($email,$name,$mobile,$pass,$question,$ans);
+               
                 unset($_POST["submit"]);
                 unset($_SESSION['mobile']);
                 if($msg!="User Name Already Present"){
@@ -46,6 +47,8 @@
 		<!---fonts-->
 		<link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 		<!---fonts-->
 		<!--script-->
 		<link rel="stylesheet" href="css/swipebox.css">
@@ -65,13 +68,14 @@
 		<div class="main-1">
 			<div class="container">
 				<div class="register">
+				 	
 				<div class="register-but">
 				<form action="account.php" method="POST"> 
 					<div class="register-top-grid">
 						<h3>personal information</h3>
 						<div>
 							<span>First Name<label>*</label></span>
-							<input type="text" name="firstname" pattern="[a-zA-Z][a-zA-Z ]{2,}" required> 
+							<input type="text" name="firstname" pattern="[a-zA-Z][a-zA-Z]{2,}" required> 
 						</div>
 						<div>
 							<span>Last Name<label>*</label></span>
@@ -106,7 +110,14 @@
 								<h3>Security information</h3>
 								<div>
 									<span>Security Question<label>*</label></span>
-									<input type="text" name="Question" required>
+									<select id="question"  name="question" required>
+                                                <option class="place" value="" disabled selected>Select Security Question</option>
+                                                <option value="What was your childhood nickname?">What was your childhood nickname?</option>
+                                                <option value="What is the name of your favourite childhood friend?">What is the name of your favourite childhood friend?</option>
+                                                <option value="What was your favourite place to visit as a child?">What was your favourite place to visit as a child?</option>
+												<option value="What was your dream job as a child?">What was your dream job as a child?</option>
+												<option value="What is your favourite teacher's nickname?">What is your favourite teacher's nickname?</option>
+                                    </select>
 								</div>
 								<div>
 									<span>Answer<label>*</label></span>
@@ -123,6 +134,7 @@
 		<!-- registration -->
 
 				</div>
+				
 		<!-- login -->
 					<!---footer--->
 					<div class="facebook-section">
