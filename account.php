@@ -1,5 +1,5 @@
 <?php
-
+	session_start();
         include "dbc.php";
         include "userclass.php";
         $error= array();
@@ -21,9 +21,9 @@
             else{
                 $user= new User();
                 $msg=$user->register($email,$name,$mobile,$pass,$question,$ans);
-               
+				echo("<script>alert('.$msg.')</script>");
                 unset($_POST["submit"]);
-                unset($_SESSION['mobile']);
+          
                 if($msg!="User Name Already Present"){
                     $_POST['success']=1;
                 }
@@ -48,16 +48,112 @@
 		<link href='//fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
 		<!---fonts-->
 		<!--script-->
 		<link rel="stylesheet" href="css/swipebox.css">
-					<script src="js/jquery.swipebox.min.js"></script> 
-						<script type="text/javascript">
-							jQuery(function($) {
-								$(".swipebox").swipebox();
-							});
-						</script>
+		<script src="js/jquery.swipebox.min.js"></script> 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			
+			jQuery(function($) {
+				$(".swipebox").swipebox();
+			});
+			$(document).ready(function(){
+				$("#firstname").on("blur paste", function() {
+					var first = document.getElementById("firstname").value;	
+					first = first.replace(/ {2,}/g,' ');
+					document.getElementById("firstname").value= first;
+					if(/\s/.test(first) != false) {
+						first=first.trim();
+						document.getElementById("firstname").value= first;
+						}	
+					});	
+				$("#lastname").on("blur paste", function() {
+					var last = document.getElementById("lastname").value;	
+					last = last.replace(/ {2,}/g,' ');
+					document.getElementById("lastname").value= last;
+					if(/\s/.test(last) != false) {
+						last=last.trim();
+						document.getElementById("firstname").value= last;
+						}	
+				});			
+				$("#answer").on("blur paste", function() {
+					var last = document.getElementById("answer").value;	
+					last = last.replace(/ {2,}/g,' ');
+					document.getElementById("answer").value= last;
+					if(/\s/.test(last) != false) {
+						last=last.trim();
+						document.getElementById("answer").value= last;
+						}	
+				});			
+				$("#email").on("keyup blur paste", function() {
+					var email = document.getElementById("email").value;	
+					email = email.replace(/ {1,}/g,'');
+					email = email.replace(/\.{2,}/g,'\.');
+					document.getElementById("email").value= email;
+				});	
+				$("#password").on("keyup blur paste", function() {
+					var email = document.getElementById("password").value;	
+					email = email.replace(/ {1,}/g,'');
+					document.getElementById("password").value= email;
+				});	
+				$("#repassword").on("keyup blur paste", function() {
+					var email = document.getElementById("repassword").value;	
+					email = email.replace(/ {1,}/g,'');
+					document.getElementById("repassword").value= email;
+				});	
+				$("#mobile").on("keyup  paste", function() {
+					var mobile = document.getElementById("mobile").value;	
+					mobile = mobile.replace(/ {1,}/g,'');
+					var y=0;
+					var in1 = mobile.charAt(0);
+					var len = mobile.length;
+					var in2=mobile.charAt(1);
+					console.log(in1, in2);
+					if(len>10 && in1!="0"){
+						alert("Invaild Number");
+						document.getElementById("mobile").value="";
+					}
+					else if(in1=="0" && in2=="0"){
+						alert("Invaild Number");
+						document.getElementById("mobile").value="";
+					}
+					else if(len==11){
+						for(i=1;i<11;i++){
+							var ch = mobile.charAt(i);
+							if(i!=10){
+								var chn = mobile.charAt(i+1);
+							}
+							if(ch==chn){
+								y++;
+							}
+						}
+						if(y==10){
+						alert("All numbers cannot be similar");
+						document.getElementById("mobile").value="";
+						}
+					}
+					else if(len==10){
+						for(i=0;i<10;i++){
+							var ch = mobile.charAt(i);
+							if(i!=9){
+								var chn = mobile.charAt(i+1);
+								if(ch==chn){
+								y++;
+							}
+							}
+							
+						}
+						if(y==9){
+						alert("All numbers cannot be similar");
+						document.getElementById("mobile").value="";
+						}
+					}
+					
+				});		
+						
+			});	
+		</script>
 		<!--script-->
 	</head>
 	<body>
@@ -75,19 +171,19 @@
 						<h3>personal information</h3>
 						<div>
 							<span>First Name<label>*</label></span>
-							<input type="text" name="firstname" pattern="[a-zA-Z][a-zA-Z]{2,}" required> 
+							<input type="text" id="firstname" name="firstname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
 						</div>
 						<div>
 							<span>Last Name<label>*</label></span>
-							<input type="text" name="lastname" pattern="[a-zA-Z][a-zA-Z ]{2,}"required> 
+							<input type="text" id="lastname" name="lastname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
 						</div>
 						<div>
 							<span>Email Address<label class="light-blue-text">*</label></span>
-							<input type="text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"required> 
+							<input type="text" id="email" name="email" pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,4}$"required> 
 						</div>
 						<div> 
 							<span>Mobile<label>*</label></span>
-							<input type="text" name="mobile" pattern="[789][0-9]{9}" required> 
+							<input type="text" id="mobile" name="mobile" pattern="[0-9]{10,11}" required> 
 						</div>
 						
 						<div class="clearfix"> </div>
@@ -99,11 +195,11 @@
 								<h3>Password Information</h3>
 								<div>
 									<span>Password<label>*</label></span>
-									<input type="password" name="password" required>
+									<input type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" required>
 								</div>
 								<div>
 									<span>Confirm Password<label>*</label></span>
-									<input type="password" name="repassword" required>
+									<input type="password" id="repassword" name="repassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" required>
 								</div>
 						</div>
 						<div class="register-bottom-grid register-top-grid">
@@ -121,7 +217,7 @@
 								</div>
 								<div>
 									<span>Answer<label>*</label></span>
-									<input type="text" name="answer" required> 
+									<input type="text" name="answer" id="answer" required> 
 								</div>
 						</div>
 						<input class="aqua-gradient" type="submit" name="submit" value="submit">

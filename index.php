@@ -33,13 +33,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		});
 	</script>	
 	<script type="text/javascript" src="js/jquery.hoverdir.js"></script>	
-							<script type="text/javascript">
-								$(function() {
+		<script type="text/javascript">
+			$(function() {
 								
-									$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
+				$(' #da-thumbs > li ').each( function() { $(this).hoverdir(); } );
 
-								});
-							</script>						
+			});
+			
+	</script>						
 	<!--script-->
 </head>
 <body>

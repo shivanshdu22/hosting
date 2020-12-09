@@ -4,11 +4,6 @@
 		header('Location:signout.php');
 	}
 	else{
-			if (!isset($_SESSION['CREATED'])) {
-				$_SESSION['CREATED'] = time();
-			} else if (time() - $_SESSION['CREATED'] > 180) {
-					unset($_SESSION['currentride']);  
-			}
 			include "dbc.php";
 			include "userclass.php";
 			$error= array();
