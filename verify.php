@@ -2,13 +2,14 @@
     session_start();
 			include "dbc.php";
 			include "userclass.php";
+			require_once('PHPMailer/PHPMailerAutoload.php');
 			$error= array();
 			$msg="";
             $user= new User();
             $ud=$user->userdetails($_SESSION['userdata']['username']);    
             $error= array();
             $msg="";
-            if(isset($_POST['verifynumber'])){
+            if(isset($_POST['OTPnumber'])){
                     $_SESSION['mobile']=$_POST['number'];
                     $number= $_POST['number'];
                    
@@ -49,23 +50,78 @@
                     curl_close($curl);
         
                     if ($err) {
-                   
+						echo "<script type='text/javascript'>alert(".$err.");</script>";
                     } else {
-                    
+						echo "<script type='text/javascript'>alert('OTP sent on your mobile number');</script>";
                     } 
                 
-            }
-            if(isset($_POST['verify'])){
+			}
+            if(isset($_POST['verifynumber'])){
                 $number= $_POST['otp'];
                 if($_SESSION['session_otp']==$number){
-                   
-                    header('Location:signup.php');
+					$_POST['success']=1;
                 }
                 else{
                     echo "<script type='text/javascript'>alert('OTP Dosen't Match');</script>";
                     unset( $_SESSION['mobile']);
                 }
-            }       
+			}
+			if(isset($_POST['sendmail'])){
+				$_SESSION['email']=$_POST['email'];
+                $email= $_POST['email'];
+                $otp = rand(100000, 999999);
+                $_SESSION['email_otp'] = $otp;
+				$mail = new PHPMailer(); 
+				$mail->isSMTP();
+				$mail->Host     = 'smtp.gmail.com';
+				$mail->SMTPSecure = 'tls';
+				$mail->Port     = 587;
+				$mail->SMTPAuth = true;
+
+				$mail->Username = 'dshivansh41@gmail.com';
+				$mail->Password = '123*456*789';
+
+
+
+				$mail->setFrom('dshivansh41@gmail.com', 'CED HOSTING');
+
+				// Add a recipient
+				$mail->addAddress($_POST['email']);
+				
+				// Add cc or bcc 
+				//$mail->addCC('cc@example.com');
+				//$mail->addBCC('bcc@example.com');
+
+				// Email subject
+				$mail->Subject = 'Ced-Hosting Confiramtion Mail';
+
+				// Set email format to HTML
+				$mail->isHTML(true);
+
+				// Email body content
+				$mailContent = "
+					<center><h2>OTP to verify your mail </h2>
+					<p><h1>".$otp."</h1></p></center>";
+				$mail->Body = $mailContent;
+
+				// Send email
+				if(!$mail->send()){
+					echo 'Message could not be sent.';
+					echo 'Mailer Error: ' . $mail->ErrorInfo;
+				}else{
+					echo "<script type='text/javascript'>alert('OTP sent on Mail');</script>";
+				}
+		}       
+		if(isset($_POST['verifymail'])){
+			$number= $_POST['otpmail'];
+			if($_SESSION['email_otp']==$number){
+				$_POST['successmail']=1;
+			}
+			else{
+				echo "<script type='text/javascript'>alert('OTP Dosen't Match');</script>";
+				unset( $_SESSION['mobile']);
+			}
+		}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -93,6 +149,16 @@
 							jQuery(function($) {
 								$(".swipebox").swipebox();
 							});
+							$(document).ready(function(){
+								$("#mobtick").hide();
+								<?php if(isset($_POST['success'])) {?>
+                    					$("#mobtick").show();
+								<?php } ?>	
+								$("#mailtick").hide();
+								<?php if(isset($_POST['successmail'])) {?>
+                    					$("#mailtick").show();
+            					<?php } ?>		
+							});
 						</script>
 		<!--script-->
 	</head>
@@ -102,6 +168,7 @@
 				<div class="content">
 					<div class="main-1">
 						<div class="container">
+						
 							<div class="login-page">
                                 <div class="col-md-12  text-center login-right mb-5">
                                     <h3>Step 2: Please Verify one </h3>
@@ -116,12 +183,21 @@
 											<span>Email Address<label>*</label></span>
 											<input type="email" <?php if(isset($ud)) { echo "value='".$ud['email']."' "; } ?> name="email"> 
 										</div>
+										<input type="submit" name="sendmail" value="SEND OTP">
+										</form>
+										<?php if(isset($_POST['sendmail'])){?>
+										<form action="verify.php" method="POST">
 										<div>
 											<span>OTP<label>*</label></span>
-											<input type="number" name="pass"> 
+											<input type="number" name="otpmail"> 
 										</div>
-										<input type="submit" name="submit" value="VERIFY">
+										<input type="submit" name="verifymail" value="VERIFY">
 										</form>
+										<?php } ?>
+										<svg class="checkmark" id="mailtick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+											<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+											<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+										</svg>
 									</div>	
                                     <div class="col-md-4 text-center login-right">
                                         <h3>OR </h3>
@@ -134,12 +210,21 @@
 											<span>Mobile Number<label>*</label></span>
 											<input type="Number" <?php if(isset($ud)) { echo "value='".$ud['mobile']."' "; } ?> name="number"> 
 										</div>
-										<div>
-											<span>OTP<label>*</label></span>
-											<input type="Number" name="otp"> 
-										</div>
-										<input type="submit" name="submit" value="VERIFY">
+										<input type="submit" name="OTPnumber" value="SEND OTP">
 										</form>
+										<?php if(isset($_POST['OTPnumber'])){?>
+											<form action="verify.php" method="POST">
+											<div>
+												<span>OTP<label>*</label></span>
+												<input type="Number" name="otp"> 
+											</div>
+											<input type="submit" name="verifynumber" value="VERIFY">
+											</form>
+										<?php } ?>
+										<svg class="checkmark" id="mobtick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+											<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+											<path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+										</svg>
 									</div>	
 									<div class="clearfix"> </div>
 								</div>

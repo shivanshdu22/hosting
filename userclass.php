@@ -59,5 +59,15 @@ class User extends DatabaseClass
                 }
             } 
         }  
+    public function deleteUser($name){
+            if($userid!=""){
+                $sql= "DELETE FROM `tbl_user` WHERE `name`='".$name."'";
+                $result= $this->conn->query($sql);
+                return $sql;
+            }    
+            else{
+                return "Not being able to update";
+            }    
+        }
 }
 ?>    
