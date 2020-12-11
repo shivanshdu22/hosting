@@ -1,4 +1,5 @@
 	<!---header--->
+	<?php $cd=$product->categorydetails(1); ?>
     <div class="header pb-5">
 			<div class="container">
 				<nav class="navbar navbar-default">
@@ -21,20 +22,25 @@
 							<ul class="nav navbar-nav">
 								<li class="active"><a href="index.php">Home <i class="sr-only">(current)</i></a></li>
 								<li><a href="about.php">About</a></li>
+								<li><a href="services.php">Services</a></li>
 								<li class="dropdown">
-									<a href="services.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<i class="caret"></i></a>
+									<a href="services.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
-										<li><a href="linuxhosting.php">Linux hosting</a></li>
-										<li><a href="wordpresshosting.php">WordPress Hosting</a></li>
-										<li><a href="windowshosting.php">Windows Hosting</a></li>
-										<li><a href="cmshosting.php">CMS Hosting</a></li>
-									</ul>			
+									<?php foreach($cd as $key=>$cdd){ ?>
+										<li><a href="<?php echo $cdd['link'];?>"><?php echo $cdd['prod_name'];?></a></li>
+									<?php } ?>			
+									</ul>
+										
 								</li>
 								<li><a href="pricing.php">Pricing</a></li>
 								<li><a href="blog.php">Blog</a></li>
 								<li><a href="contact.php">Contact</a></li>
 								<li><a href="contact.php"><i class="fa fa-shopping-cart " aria-hidden="true"></i></a></li>
+								<?php if(isset($_SESSION['userdata'])){ ?>
+								<li><a href="signout.php">Logout</a></li>
+								<?php } else {?>
 								<li><a href="login.php">Login</a></li>
+								<?php } ?>
 							</ul>
 									  
 						</div><!-- /.navbar-collapse -->

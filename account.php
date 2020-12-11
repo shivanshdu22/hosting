@@ -1,7 +1,12 @@
 <?php
 	session_start();
         include "dbc.php";
-        include "userclass.php";
+		include "userclass.php";
+  		include "productclass.php";
+  		$product= new Product(); 
+	
+	
+  
         $error= array();
         $msg="";
         if(isset($_POST["submit"])){

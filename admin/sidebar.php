@@ -24,10 +24,10 @@
                         <a href="createcategory.php" class="nav-link"><i class="ni ni-fat-add"></i>Create Category</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="ni ni-fat-add"></i>Add Product</a>
+                        <a href="createproduct.php" class="nav-link"><i class="ni ni-fat-add"></i>Add Product</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link"><i class="ni ni-fat-delete"></i>View Products</a>
+                        <a href="viewproduct.php" class="nav-link"><i class="ni ni-fat-delete"></i>View Products</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link"><i class="ni ni-fat-delete"></i>Create New Offers</a>

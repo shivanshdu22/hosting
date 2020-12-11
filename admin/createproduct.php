@@ -8,19 +8,19 @@
   $product= new Product();
   $ud=$user->userdetails($_SESSION['userdata']['username']); 
   if(isset($_POST['submit'])){
-    $category=isset($_POST['subcategory'])?$_POST['subcategory']:'';
-    $link=isset($_POST['link'])?$_POST['link']:'';
-    $msg=$product->addcategory($category,$link);
-    unset($_POST);
-    echo "<script type='text/javascript'>alert('".$msg."');</script>";
-  }
-  if(isset($_POST['update'])){
-    $id=isset($_POST['id'])?$_POST['id']:'';
-    $category=isset($_POST['subcategory'])?$_POST['subcategory']:'';
-    $link=isset($_POST['link'])?$_POST['link']:'';
-    $avail=isset($_POST['available'])?$_POST['available']:'';
-    $msg=$product->updatecategory($id,$category,$link,$avail);
-    unset($_POST);
+    $category=isset($_POST['category'])?$_POST['category']:'';
+    $name=isset($_POST['name'])?$_POST['name']:'';
+    $link=isset($_POST['url'])?$_POST['url']:'';
+    $mon=isset($_POST['monprice'])?$_POST['monprice']:'';
+    $year=isset($_POST['yearprice'])?$_POST['yearprice']:'';
+    $sku=isset($_POST['sku'])?$_POST['sku']:'';
+    $webspace=isset($_POST['webspace'])?$_POST['webspace']:'';
+    $bandwidth=isset($_POST['Bandwidth'])?$_POST['Bandwidth']:'';
+    $domain=isset($_POST['domain'])?$_POST['domain']:'';
+    $mail=isset($_POST['Mail'])?$_POST['Mail']:'';
+    $desc = array("webspace"=>$webspace, "Bandwidth"=>$bandwidth, "Domain"=>"$domain", "Mail"=>"$mail");
+    $desc=json_encode($desc);
+    $msg=$product->addproduct($category,$name,$link,$desc,$mon,$year,$sku);
     echo "<script type='text/javascript'>alert('".$msg."');</script>";
   }
   $cd=$product->categorydetails(1);
@@ -320,71 +320,82 @@
     <div class="container-fluid mt--6">
       <div class="row mt-5">
         <div class="col mt-5">
-           <h1 class="center-text text-blue">ADD CATERGORY</h1>
-            <form class="form" action="createcategory.php" method="POST">
+           <h1 class="center-text text-blue">ADD PRODUCT</h1>
+            <form class="form" action="createproduct.php" method="POST">
                 <div class="form-group">
-                    <input class="form-control" name="id" type="text" value="" id="id" hidden>
-                </div>
-                <div class="form-group">
-                    <label for="category" class="form-control-label text-white">Category</label>
-                    <input class="form-control" name="category" type="text" value="HOSTING" id="category" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="subcategory" class="form-control-label text-blue">Sub-Category</label>
-                    <input class="form-control" name="subcategory" type="text" placeholder="Sub-Category" id="subcategory">
+                    <label for="category" class="form-control-label text-blue">Select Product Category</label>
+                    <select id="question" class="form-control" name="category" required>
+                            <option class="place" value="" disabled selected>Select Category</option>
+                            <?php foreach ($cd as $key=>$cdd){ ?>
+                            <option class="place" value="<?php echo $cdd['id']; ?>"><?php echo $cdd['prod_name']; ?></option>
+                            <?php } ?>
+                    </select> 
                 </div>
                 <div class="form-group">
-                    <label for="link" class="form-control-label text-blue">Link</label>
-                    <input class="form-control" name="link" type="text" placeholder="Link" id="link">
+                    <label for="subcategory" class="form-control-label text-blue">Enter Product Name *</label>
+                    <input class="form-control" name="name" type="text" placeholder="Sub-Category" id="subcategory">
                 </div>
-                <div id="available" class="form-group text-blue">
-                      <label for="exampleFormControlSelect1">Available</label>
-                      <select class="form-control" name="available" id="available">
-                        <option value="1">Available</option>
-                        <option value="2">Unavailable</option>
-                       
-                      </select>
+                <div class="form-group">
+                    <label for="example-url-input" class="form-control-label text-blue">URL</label>
+                    <input class="form-control" type="text" name="url" value="" id="example-url-input">
                 </div>
-                <button type="submit" name="submit" id="add" class="btn btn-primary">Add Category</button>
-                <button type="submit" name="update" id="update" class="btn btn-primary">Update Category</button>
+                <div class="border-top my-3"></div>
+                <p class="h2 text-blue">Product Description</p>
+                <p class="text-blue">Enter Product Description Below</p>
+                <div class="form-group">
+                 <label for="example-number-input" class="form-control-label text-blue">Enter Monthly Plan</label>
+                 <input class="form-control" type="number" name="monprice" value="" id="example-number-input">
+                 <small id="emailHelp" class="form-text text-muted">This would be Monthly Plan</small>
+                </div>
+                <div class="form-group">
+                    <label for="example-number-input" class="form-control-label text-blue">Enter Annual Price</label>
+                    <input class="form-control" type="number" name="yearprice" value="" id="example-number-input">
+                    <small id="emailHelp" class="form-text text-muted">This would be Annual Price</small>
 
+                </div>
+                <div class="form-group">
+                    <label for="example-number-input" class="form-control-label text-blue">SKU</label>
+                    <input class="form-control" type="number" name="sku" value="" id="example-number-input">
+                </div>
+                <div class="border-top my-3 text-blue"></div>
+                <p class="h2 text-blue">Features</p>
+                <div class="form-group">
+                 <label for="example-number-input" class="form-control-label text-blue">Web Space (in GB)</label>
+                 <input class="form-control" type="number" name="webspace" value="" id="example-number-input">
+                 <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
+
+                </div>
+                <div class="form-group">
+                    <label for="example-number-input" class="form-control-label text-blue">Bandwidth (in GB)</label>
+                    <input class="form-control" type="number" name="Bandwidth" value="" id="example-number-input">
+                    <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
+
+                </div>
+                <div class="form-group">
+                    <label for="example-number-input" class="form-control-label text-blue">Free Domain</label>
+                    <input class="form-control" type="text" name="domain" value="" id="example-number-input">
+                    <small id="emailHelp" class="form-text text-muted">Enter 0 if no domain available in this service</small>
+
+                </div>
+                <div class="form-group">
+                    <label for="example-number-input" class="form-control-label text-blue">Language/Technology Support</label>
+                    <input class="form-control" type="text" name="stack" value="" id="example-number-input">
+                    <small id="emailHelp" class="form-text text-muted">Separate by (,) Ex: PHP, MySQL, MongoDB</small>
+
+                </div>
+                <div class="form-group">
+                    <label for="example-number-input" class="form-control-label text-blue">Mail Box</label>
+                    <input class="form-control" type="text" name="Mail" value="" id="example-number-input">
+                    <small id="emailHelp" class="form-text text-muted">Enter Number of mailbox will be provided, enter 0 if none</small>
+
+                </div>
+                <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
             </form>
 
         </div>
       </div>
       <div class="row mt-5">
-        <div class="col">
-            <h1 class="text-blue">Category Table</h1>
-            <table id="categorytable" class="table table-borderless table-hover">
-                <thead class="blue h3">
-                    <th>ID</th>
-                    <th>Parent Category</th>
-                    <th>Name</th>
-                    <th>Link</th>
-                    <th>Availablity</th>
-                    <th>Date of Launch</th>
-                    <th>Option</th>
-                </thead>
-                <tbody>
-                <?php
-                        foreach($cd as $key=> $udd) {?>
-						<tr>
-							<td><id><?php echo $udd['id'];?></id></td>
-                            <td><parent><?php if($udd['prod_parent_id']==1){echo "Hosting";} else{echo "Unknow Category";}?></parent></td>
-                            <td><name><?php echo $udd['prod_name'];?></name></td>
-                            <td><lik><?php echo $udd['link'];?></lik></td>
-                            <td><avail><?php if($udd['prod_available']==1){echo "Available";} else{echo "Unavailable";}?></avail></td>
-                            <td><?php echo $udd['prod_launch_date'];?></td>   
-                            <td>
-								<!-- Icons -->
-								<a href="#" data-id="<?php echo $udd['id'];?>" class="edit btn btn-info"  title="Edit">Edit</a>
-								<a href="#" data-id="<?php echo $udd['id'];?>" class="delete btn btn-danger"  title="Delete">Delete</a> 
-							</td>                       
-						</tr>
-				<?php }?>
-                </tbody>
-            </table>
-        </div>
+       
       </div>
       <!-- Footer -->
       <?php require_once("footer.php"); ?>
@@ -406,57 +417,7 @@
 <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#categorytable').DataTable({});  
-            $('#available').hide();
-            $('.delete').click(function(){
-                    if(confirm("Are you sure you want to delete this?")){ 
-                        var id =$(this).attr('data-id');
-                        var action="deletecategory";
-                        $.ajax({
-                            url:'ajax.php',
-                            type:'POST',
-                            data:{ id:id , action:action},
-                            success: function(result){
-                                alert("Action Done")
-                                location.reload();
-                                
-                            },
-                            error:function(){
-                                alert ('error');
-                            }
-                        });
-                    }
-                    else{
-                        return false;
-                    }   
-            });	
-            $('#update').hide();
-                $(".edit").click(function(){
-                  if(confirm("Are you sure you want to edit this?")){ 
-                    var hash="#";
-                    var currentRow = $(this).closest('tr');
-                    var id = currentRow.find('id').text();
-				          	var parent = currentRow.find('parent').text();
-                    var name =currentRow.find('name').text();
-                    var link =currentRow.find('lik').text();
-                    var av =currentRow.find('avail').text(); 
-                    $('#available').show();
-                    console.log(id);
-                    $('#id').val(id); 
-                    $('#category').val(parent); 
-                    $('#subcategory').val(name);
-                    $('#link').val(link);
-                    $('#add').hide();
-                    $('#update').show();
-                    $(this).closest('tr').remove();
-                    $('html, body').animate({
-                        'scrollTop' : $(".form").position().top
-                    });
-                  }
-                  else{
-                    return false;
-                  }
-                });
+            $('#categorytable').DataTable({});    
          });
     </script>
 </html>

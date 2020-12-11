@@ -30,12 +30,12 @@ class User extends DatabaseClass
                     if($row['active']==1){
                         $_SESSION['userdata']=array('userid'=>$row['id'],'username'=>$row['email'],'isAdmin'=>$row['is_admin']);	
                         //print_r($_SESSION);
-                        if($row['isAdmin']==1){
-                            header('Location:admin/admin.php');
+                        if($row['is_admin']==1){
+                            header('Location:admin/index.php');
                             return "Valid Login Details";
                         } 
                         else{
-                            header('Location:userdash.php');
+                            header('Location:index.php');
                             return "Valid Login Details"; 
                         }  
                     }

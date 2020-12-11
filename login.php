@@ -8,15 +8,23 @@
 			include "userclass.php";
 			$error= array();
 			$msg="";
-			if(isset($_POST["submit"])){
-				$username=isset($_POST['email'])?$_POST['email']:'';
-				$pass=isset($_POST['pass'])?$_POST['pass']:'';
-				$check=isset($_POST['remember'])?$_POST['remember']:'';
-			
-				$user= new User();
-				$msg=$user->login($username,$pass);
+            if (isset($_POST["submit"])) {
+                $username=isset($_POST['email'])?$_POST['email']:'';
+                $pass=isset($_POST['pass'])?$_POST['pass']:'';
+                $check=isset($_POST['remember'])?$_POST['remember']:'';
+            
+                $user= new User();
+                $msg=$user->login($username, $pass);
+            }
+	
+  			include "productclass.php";
 				
-			} 
+  			$product= new Product(); 
+	
+	
+ 
+	
+
 ?>
 <!DOCTYPE HTML>
 <html>

@@ -2,6 +2,13 @@
     session_start();
 			include "dbc.php";
 			include "userclass.php";
+			
+  			include "productclass.php";
+  			
+  			$product= new Product(); 
+	
+	
+  
 			require_once('PHPMailer/PHPMailerAutoload.php');
 			$error= array();
 			$msg="";
@@ -186,13 +193,13 @@
 										<input type="submit" name="sendmail" value="SEND OTP">
 										</form>
 										<?php if(isset($_POST['sendmail'])){?>
-										<form action="verify.php" method="POST">
-										<div>
-											<span>OTP<label>*</label></span>
-											<input type="number" name="otpmail"> 
-										</div>
-										<input type="submit" name="verifymail" value="VERIFY">
-										</form>
+											<form action="verify.php" method="POST">
+											<div>
+												<span>OTP<label>*</label></span>
+												<input type="number" name="otpmail"> 
+											</div>
+											<input type="submit" name="verifymail" value="VERIFY">
+											</form>
 										<?php } ?>
 										<svg class="checkmark" id="mailtick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
 											<circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
