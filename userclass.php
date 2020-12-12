@@ -14,7 +14,8 @@ class User extends DatabaseClass
             $password= md5($pass);
             $sql = "INSERT INTO tbl_user (email, name, mobile, is_admin, sign_up_date, password, security_question, security_answer) VALUES ('".$username."', '".$name."', '".$mobile."','0','".date("Y/m/d h:i:s")."','".$password."', '".$ques."','".$ans."')";
             $result= $this->conn->query($sql);
-            $_SESSION['userdata']=array('userid'=>$row['id'],'username'=>$row['email'],'isAdmin'=>$row['is_admin']);	
+            $last_id = $this->conn->insert_id;
+            $_SESSION['userdata']=array('userid'=>$last_id,'username'=>$username,'isAdmin'=>0);	
             header('Location:verify.php');
             return "Registered Successfully. Please wait for approval!";
         }
@@ -69,5 +70,18 @@ class User extends DatabaseClass
                 return "Not being able to update";
             }    
         }
+    public function approveuser($mobile,$email,$userid){
+        
+            if($mobile==""){
+                $sql= "UPDATE `tbl_user` SET `email`='".$email."',`email_approved`='1', `active`='1' WHERE id='".$userid."'";
+                $result= $this->conn->query($sql);
+                return "Update Done";
+            }    
+            else if($email==""){
+                $sql= "UPDATE `tbl_user` SET `mobile`='".$mobile."',`phone_approved`='1', `active`='1' WHERE id='".$userid."'";
+                $result= $this->conn->query($sql);
+                return "Update Done";
+            }    
+        }    
 }
 ?>    

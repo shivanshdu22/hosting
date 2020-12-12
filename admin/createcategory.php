@@ -331,11 +331,11 @@
                 </div>
                 <div class="form-group">
                     <label for="subcategory" class="form-control-label text-blue">Sub-Category</label>
-                    <input class="form-control" name="subcategory" type="text" placeholder="Sub-Category" id="subcategory">
+                    <input class="form-control" name="subcategory" type="text" placeholder="Sub-Category" id="subcategory" required>
                 </div>
                 <div class="form-group">
                     <label for="link" class="form-control-label text-blue">Link</label>
-                    <input class="form-control" name="link" type="text" placeholder="Link" id="link">
+                    <input class="form-control" name="link" type="text" placeholder="Link" id="link" required>
                 </div>
                 <div id="available" class="form-group text-blue">
                       <label for="exampleFormControlSelect1">Available</label>
@@ -405,8 +405,18 @@
 </body>
 <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script>
+        //$('#add').hide();
         $(document).ready(function(){
-            $('#categorytable').DataTable({});  
+            $('#categorytable').DataTable({}); 
+            $("#subcategory").on("blur paste", function() {
+                var first = document.getElementById("subcategory").value;	
+                first = first.replace(/ {2,}/g,' ');
+                document.getElementById("subcategory").value= first;
+                if(/\s/.test(first) != false) {
+                  first=first.trim();
+                  document.getElementById("subcategory").value= first;
+                  }	
+					  });	 
             $('#available').hide();
             $('.delete').click(function(){
                     if(confirm("Are you sure you want to delete this?")){ 

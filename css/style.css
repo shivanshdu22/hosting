@@ -1572,6 +1572,13 @@ a.button4:hover {
 	font-size: 1em;
 	padding: 0.5em;
 }
+.register-top-grid select, .register-bottom-grid input[type="password"] {
+	border: 1px solid #555;
+	outline-color:#FD9F3E;
+	width: 96%;
+	font-size: 1em;
+	padding: 0.5em;
+}
 .checkbox {
 	margin-bottom: 4px;
 	padding-left: 27px;

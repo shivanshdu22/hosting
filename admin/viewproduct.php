@@ -24,7 +24,7 @@
     echo "<script type='text/javascript'>alert('".$msg."');</script>";
   }
   $cd=$product->productdetails(1);
-
+  $nd=$product->categorydetails(1);
 ?>
 <!DOCTYPE html>
 <html>
@@ -320,15 +320,15 @@
     <div class="container-fluid mt--6">
       <div class="row mt-5">
         <div class="col mt-5">
-           <h1 class="center-text text-blue">ADD CATERGORY</h1>
+           <h1 class="center-text text-blue">View Product</h1>
            <form class="form" id="form" action="viewproduct.php" method="POST">
                 <div class="form-group">
                     <label for="category" class="form-control-label text-blue">Select Product Category</label>
                     <select id="question" class="form-control" name="category" required>
                             <option class="place" value="" disabled selected>Select Category</option>
-                            <?php foreach ($cd as $key=>$cdd){ ?>
+                            <?php foreach ($nd as $key=>$cdd){ if($cdd['prod_parent_id']==1){?>
                             <option class="place" value="<?php echo $cdd['id']; ?>"><?php echo $cdd['prod_name']; ?></option>
-                            <?php } ?>
+                            <?php } } ?>
                     </select> 
                 </div>
                 <div class="form-group">
@@ -337,65 +337,72 @@
                 </div>
                 <div class="form-group">
                     <label for="example-url-input" class="form-control-label text-blue">URL</label>
-                    <input class="form-control" type="text" name="url" value="" id="example-url-input">
+                    <input class="form-control" type="text" name="url" value="" id="link">
                 </div>
                 <div class="border-top my-3"></div>
                 <p class="h2 text-blue">Product Description</p>
                 <p class="text-blue">Enter Product Description Below</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Enter Monthly Plan</label>
-                 <input class="form-control" type="number" name="monprice" value="" id="example-number-input">
+                 <input class="form-control" type="number" name="monprice" value="" id="mon">
                  <small id="emailHelp" class="form-text text-muted">This would be Monthly Plan</small>
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Enter Annual Price</label>
-                    <input class="form-control" type="number" name="yearprice" value="" id="example-number-input">
+                    <input class="form-control" type="number" name="yearprice" value="" id="annual">
                     <small id="emailHelp" class="form-text text-muted">This would be Annual Price</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">SKU</label>
-                    <input class="form-control" type="number" name="sku" value="" id="example-number-input">
+                    <input class="form-control" type="number" name="sku" value="" id="sku">
                 </div>
                 <div class="border-top my-3 text-blue"></div>
                 <p class="h2 text-blue">Features</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Web Space (in GB)</label>
-                 <input class="form-control" type="number" name="webspace" value="" id="example-number-input">
+                 <input class="form-control" type="number" name="webspace" value="" id="web">
                  <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Bandwidth (in GB)</label>
-                    <input class="form-control" type="number" name="Bandwidth" value="" id="example-number-input">
+                    <input class="form-control" type="number" name="Bandwidth" value="" id="band">
                     <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Free Domain</label>
-                    <input class="form-control" type="text" name="domain" value="" id="example-number-input">
+                    <input class="form-control" type="text" name="domain" value="" id="domain">
                     <small id="emailHelp" class="form-text text-muted">Enter 0 if no domain available in this service</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Language/Technology Support</label>
-                    <input class="form-control" type="text" name="stack" value="" id="example-number-input">
+                    <input class="form-control" type="text" name="stack" value="" id="stack">
                     <small id="emailHelp" class="form-text text-muted">Separate by (,) Ex: PHP, MySQL, MongoDB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Mail Box</label>
-                    <input class="form-control" type="text" name="Mail" value="" id="example-number-input">
+                    <input class="form-control" type="text" name="Mail" value="" id="mail">
                     <small id="emailHelp" class="form-text text-muted">Enter Number of mailbox will be provided, enter 0 if none</small>
 
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
+                <div id="available" class="form-group text-blue">
+                      <label for="exampleFormControlSelect1">Available</label>
+                      <select class="form-control" name="available" id="available">
+                        <option value="1">Available</option>
+                        <option value="2">Unavailable</option>
+                      </select>
+                </div>
+                <button type="submit" name="update" class="btn btn-primary">Update Product</button>
             </form>
 
         </div>
       </div>
       <div class="row mt-5">
-        <div class="col">
+        <div class="col table-responsive">
             <h1 class="text-blue">Category Table</h1>
             <table id="categorytable" class="table table-borderless table-hover">
                 <thead class="blue h3">
@@ -408,6 +415,7 @@
                     <th>Webspace</th>
                     <th>Bandwidth</th>
                     <th>Domain</th>
+                    <th>Technology</th>
                     <th>Mail</th>
                     <th>Monthly Price</th>
                     <th>Yearly Price</th>
@@ -419,18 +427,18 @@
                         foreach($cd as $key=> $udd) {?>
 						<tr>
 							<td><id><?php echo $udd['id'];?></id></td>
-                            <td><parent><?php if($udd['prod_parent_id']==1){echo "Hosting";} else{echo "Unknow Category";}?></parent></td>
+                            <td><parent><?php foreach($nd as $k=>$m){if($m['id']==$udd['prod_parent_id']){echo $m['prod_name'];}}?></parent></td>
                             <td><name><?php echo $udd['prod_name'];?></name></td>
                             <td><lik><?php echo $udd['link'];?></lik></td>
                             <td><avail><?php if($udd['prod_available']==1){echo "Available";} else{echo "Unavailable";}?></avail></td>
                             <td><?php echo $udd['prod_launch_date'];?></td>   
-                            <?php  $arr = (array) json_decode($udd['description'],true); 
+                            <?php $u=0; $arr = (array) json_decode($udd['description'],true); 
                                     foreach($arr as $k=> $ndd){ ?>
-                            <td><lik><?php print_r($ndd);?></lik></td> 
+                            <td><lik<?php  $u++; echo $u; ?> ><?php print_r($ndd);?></lik<?php echo $u;?> > </td> 
                             <?php } ?>      
-                            <td><id><?php echo $udd['mon_price'];?></id></td>
-                            <td><id><?php echo $udd['annual_price'];?></id></td>
-                            <td><id><?php echo $udd['sku'];?></id></td>
+                            <td><mon><?php echo $udd['mon_price'];?></mon></td>
+                            <td><annual><?php echo $udd['annual_price'];?></annual></td>
+                            <td><sku><?php echo $udd['sku'];?></sku></td>
                             <td>
 								<!-- Icons -->
 								<a href="#" data-id="<?php echo $udd['id'];?>" class="edit btn btn-info"  title="Edit">Edit</a>
@@ -491,23 +499,37 @@
             
             $(".edit").click(function(){
                   if(confirm("Are you sure you want to edit this?")){ 
-                    $('.form').hide();
+                    $('.form').show();
+                    $(this).closest('tr').remove();
                     var hash="#";
                     var currentRow = $(this).closest('tr');
                     var id = currentRow.find('id').text();
 				          	var parent = currentRow.find('parent').text();
                     var name =currentRow.find('name').text();
                     var link =currentRow.find('lik').text();
+                    var web =currentRow.find('lik1').text();
+                    var band =currentRow.find('lik2').text();
+                    var domain =currentRow.find('lik3').text();
+                    var lang =currentRow.find('lik4').text();
+                    var mail =currentRow.find('lik5').text();
+                    var mon =currentRow.find('mon').text(); 
+                    var annual =currentRow.find('annual').text(); 
+                    var sku =currentRow.find('sku').text(); 
                     var av =currentRow.find('avail').text(); 
-                    $('#available').show();
-                    console.log(id);
+                    console.log(name);
                     $('#id').val(id); 
-                    $('#category').val(parent); 
                     $('#subcategory').val(name);
                     $('#link').val(link);
+                    $('#web').val(web);
+                    $('#band').val(band);
+                    $('#domain').val(domain);
+                    $('#mail').val(mail);
+                    $('#mon').val(mon);
+                    $('#annual').val(annual);
+                    $('#sku').val(sku);
+                    $('#stack').val(lang);
                     $('#add').hide();
                     $('#update').show();
-                    $(this).closest('tr').remove();
                     $('html, body').animate({
                         'scrollTop' : $(".form").position().top
                     });

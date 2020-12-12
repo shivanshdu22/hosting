@@ -5,7 +5,7 @@
   		include "productclass.php";
   		$product= new Product(); 
 	
-	
+
   
         $error= array();
         $msg="";
@@ -16,12 +16,13 @@
             $mobile=isset($_POST['mobile'])?$_POST['mobile']:'';
             $pass=isset($_POST['password'])?$_POST['password']:'';
 			$pass2=isset($_POST['repassword'])?$_POST['repassword']:'';
-			$question=isset($_POST['Question'])?$_POST['Question']:'';
+			$question=isset($_POST['question'])?$_POST['question']:'';
             $ans=isset($_POST['answer'])?$_POST['answer']:'';
 			$name= "".$firstname." ".$lastname."";
 
             if($pass!=$pass2){
-            	$msg='Password does not match';
+				$msg='Password does not match';
+				echo "<script type='text/javascript'>alert(".$msg.");</script>";
             }
             else{
                 $user= new User();
@@ -64,6 +65,8 @@
 				$(".swipebox").swipebox();
 			});
 			$(document).ready(function(){
+				$(".error").text("Please fill this field");
+				
 				$("#firstname").on("blur paste", function() {
 					var first = document.getElementById("firstname").value;	
 					first = first.replace(/ {2,}/g,' ');
@@ -173,22 +176,27 @@
 				<div class="register-but">
 				<form action="account.php" method="POST"> 
 					<div class="register-top-grid">
-						<h3>personal information</h3>
+						<h3>Personal Information</h3>
+						<p>(* means Required)</p>
 						<div>
 							<span>First Name<label>*</label></span>
 							<input type="text" id="firstname" name="firstname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
+							<p class="error"></p>
 						</div>
 						<div>
 							<span>Last Name<label>*</label></span>
 							<input type="text" id="lastname" name="lastname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
+							<p class="error"></p>
 						</div>
 						<div>
 							<span>Email Address<label class="light-blue-text">*</label></span>
 							<input type="text" id="email" name="email" pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,4}$"required> 
+							<p class="error"></p>
 						</div>
 						<div> 
 							<span>Mobile<label>*</label></span>
 							<input type="text" id="mobile" name="mobile" pattern="[0-9]{10,11}" required> 
+							<p class="error"></p>
 						</div>
 						
 						<div class="clearfix"> </div>
@@ -201,10 +209,12 @@
 								<div>
 									<span>Password<label>*</label></span>
 									<input type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" required>
+									<p class="error"></p>
 								</div>
 								<div>
 									<span>Confirm Password<label>*</label></span>
 									<input type="password" id="repassword" name="repassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" required>
+									<p class="error"></p>
 								</div>
 						</div>
 						<div class="register-bottom-grid register-top-grid">
@@ -212,7 +222,6 @@
 								<div>
 									<span>Security Question<label>*</label></span>
 									<select id="question"  name="question" required>
-                                                <option class="place" value="" disabled selected>Select Security Question</option>
                                                 <option value="What was your childhood nickname?">What was your childhood nickname?</option>
                                                 <option value="What is the name of your favourite childhood friend?">What is the name of your favourite childhood friend?</option>
                                                 <option value="What was your favourite place to visit as a child?">What was your favourite place to visit as a child?</option>
@@ -223,9 +232,11 @@
 								<div>
 									<span>Answer<label>*</label></span>
 									<input type="text" name="answer" id="answer" required> 
+									<p class="error"></p>
 								</div>
 						</div>
 						<input class="aqua-gradient" type="submit" name="submit" value="submit">
+						
 						<div class="clearfix"> </div>
 					</form>
 					</div>

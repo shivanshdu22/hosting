@@ -16,9 +16,10 @@
     $sku=isset($_POST['sku'])?$_POST['sku']:'';
     $webspace=isset($_POST['webspace'])?$_POST['webspace']:'';
     $bandwidth=isset($_POST['Bandwidth'])?$_POST['Bandwidth']:'';
+    $stack=isset($_POST['stack'])?$_POST['stack']:'';
     $domain=isset($_POST['domain'])?$_POST['domain']:'';
     $mail=isset($_POST['Mail'])?$_POST['Mail']:'';
-    $desc = array("webspace"=>$webspace, "Bandwidth"=>$bandwidth, "Domain"=>"$domain", "Mail"=>"$mail");
+    $desc = array("webspace"=>$webspace, "Bandwidth"=>$bandwidth, "Domain"=>"$domain", "Stack"=> $stack ,"Mail"=>"$mail");
     $desc=json_encode($desc);
     $msg=$product->addproduct($category,$name,$link,$desc,$mon,$year,$sku);
     echo "<script type='text/javascript'>alert('".$msg."');</script>";

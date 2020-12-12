@@ -7,7 +7,7 @@
   			
   			$product= new Product(); 
 	
-	
+			
   
 			require_once('PHPMailer/PHPMailerAutoload.php');
 			$error= array();
@@ -67,6 +67,11 @@
                 $number= $_POST['otp'];
                 if($_SESSION['session_otp']==$number){
 					$_POST['success']=1;
+					$email="";
+					$msg=$user->approveuser($_SESSION['mobile'] ,$mobile ,$_SESSION['userdata']['userid']); 
+					echo "<script type='text/javascript'>alert('".$msg."');</script>";
+					unset( $_SESSION['mobile']);
+					header('Location:login.php');
                 }
                 else{
                     echo "<script type='text/javascript'>alert('OTP Dosen't Match');</script>";
@@ -123,6 +128,11 @@
 			$number= $_POST['otpmail'];
 			if($_SESSION['email_otp']==$number){
 				$_POST['successmail']=1;
+				$mobile="";
+					$msg=$user->approveuser($mobile, $_SESSION['email'] ,$_SESSION['userdata']['userid']); 
+					echo "<script type='text/javascript'>alert('".$msg."');</script>";
+					unset( $_SESSION['email']);
+					header('Location:login.php');
 			}
 			else{
 				echo "<script type='text/javascript'>alert('OTP Dosen't Match');</script>";
