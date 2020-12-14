@@ -20,11 +20,11 @@
     $link=isset($_POST['link'])?$_POST['link']:'';
     $avail=isset($_POST['available'])?$_POST['available']:'';
     $msg=$product->updatecategory($id,$category,$link,$avail);
-    unset($_POST);
+    
     echo "<script type='text/javascript'>alert('".$msg."');</script>";
   }
   $cd=$product->categorydetails(1);
-
+  
 ?>
 <!DOCTYPE html>
 <html>
@@ -332,10 +332,12 @@
                 <div class="form-group">
                     <label for="subcategory" class="form-control-label text-blue">Sub-Category</label>
                     <input class="form-control" name="subcategory" type="text" placeholder="Sub-Category" id="subcategory" required>
+                    <p class="error" id="sub"></p>
                 </div>
                 <div class="form-group">
                     <label for="link" class="form-control-label text-blue">Link</label>
-                    <input class="form-control" name="link" type="text" placeholder="Link" id="link" required>
+                    <input class="form-control" name="link" type="text" placeholder="Link" id="link" >
+                   
                 </div>
                 <div id="available" class="form-group text-blue">
                       <label for="exampleFormControlSelect1">Available</label>
@@ -345,8 +347,8 @@
                        
                       </select>
                 </div>
-                <button type="submit" name="submit" id="add" class="btn btn-primary">Add Category</button>
-                <button type="submit" name="update" id="update" class="btn btn-primary">Update Category</button>
+                <button type="button" name="submit" id="add" class="btn btn-primary" value="Add Category">Add Category</button>
+                <input type="button" name="update" id="update" class="btn btn-primary" value="Update Category">
 
             </form>
 
@@ -377,8 +379,8 @@
                             <td><?php echo $udd['prod_launch_date'];?></td>   
                             <td>
 								<!-- Icons -->
-								<a href="#" data-id="<?php echo $udd['id'];?>" class="edit btn btn-info"  title="Edit">Edit</a>
-								<a href="#" data-id="<?php echo $udd['id'];?>" class="delete btn btn-danger"  title="Delete">Delete</a> 
+								<a href="" data-id="<?php echo $udd['id'];?>" class="edit btn btn-info"  title="Edit">Edit</a>
+								<a href="" data-id="<?php echo $udd['id'];?>" class="delete btn btn-danger"  title="Delete">Delete</a> 
 							</td>                       
 						</tr>
 				<?php }?>
@@ -407,6 +409,63 @@
     <script>
         //$('#add').hide();
         $(document).ready(function(){
+         
+          $(".error").text("Please fill this field");
+          $('#subcategory').on('keypress', function (event) {
+    				var regex = new RegExp("^[a-zA-Z0-9\ .]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $("#subcategory").on("blur paste", function(event) {
+            var text = document.getElementById("subcategory").value;	
+            if(text!=""){
+              $("#sub").html("");
+              text = text.replace(/\.{2,}/g,'.');
+              text = text.replace(/\ {2,}/g,' ');
+              document.getElementById("subcategory").value= text;
+              var categoryregex = new RegExp("^[a-zA-z][0-9a-zA-Z\.\ ]+$");
+						  if (categoryregex.test(text)){
+								$("#sub").html("");
+                if(/\s/.test(text) != false) {
+                  text=text.trim();
+                  document.getElementById("subcategory").value= text;
+                  $("#sub").html("");
+                  $("#subcategory").css({"border": "1px solid green"});
+                  subc=1;
+                }	
+								$("#subcategory").css({"border": "1px solid green"});
+                subc=1;
+							}
+						  else{
+								$("#sub").html("Please begin with Alphabets");
+                $("#subcategory").css({"border": "1px solid red"});
+                if(/\s/.test(text) != false) {
+                  text=text.trim();
+                  document.getElementById("subcategory").value= text;
+                  $("#sub").html("");
+                  $("#subcategory").css({"border": "1px solid green"});
+                  subc=1;
+                }	
+                
+					  	}		
+            }
+            else{
+              $("#sub").html("Please fill this field");
+              $("#subcategory").css({"border": "1px solid red"});
+            }
+				  });	
+          $(":button").click(function(){
+              if(subc==1){
+                $("button[name='submit']").prop("type", "submit");
+                $("input[name='update']").prop("type", "submit");
+              }	
+              else{
+                return false;
+              }
+            });
             $('#categorytable').DataTable({}); 
             $("#subcategory").on("blur paste", function() {
                 var first = document.getElementById("subcategory").value;	
@@ -420,6 +479,7 @@
             $('#available').hide();
             $('.delete').click(function(){
                     if(confirm("Are you sure you want to delete this?")){ 
+                      
                         var id =$(this).attr('data-id');
                         var action="deletecategory";
                         $.ajax({
@@ -428,7 +488,7 @@
                             data:{ id:id , action:action},
                             success: function(result){
                                 alert("Action Done")
-                                location.reload();
+                                window.location.replace("createcategory.php");
                                 
                             },
                             error:function(){

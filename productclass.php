@@ -11,9 +11,16 @@ class Product extends DatabaseClass
             return "Category Already Present";
             }
         else{
-            $sql = "INSERT INTO tbl_product (prod_parent_id,prod_name, link, prod_launch_date) VALUES ('1','".$prod."', '".$link."','".date("Y/m/d h:i:s")."')";
-            $result= $this->conn->query($sql);
-            return "Category added!";
+            if ($link!=""){
+                $sql = "INSERT INTO tbl_product (prod_parent_id,prod_name, link, prod_launch_date) VALUES ('1','".$prod."', '".$link."','".date("Y/m/d h:i:s")."')";
+                $result= $this->conn->query($sql);
+                return "Category added!";
+            }
+            else{
+                $sql = "INSERT INTO tbl_product (prod_parent_id,prod_name, prod_launch_date) VALUES ('1','".$prod."','".date("Y/m/d h:i:s")."')";
+                $result= $this->conn->query($sql);
+                return "Category added!";
+            }
         }
     }   
 

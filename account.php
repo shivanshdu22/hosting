@@ -10,6 +10,7 @@
         $error= array();
         $msg="";
         if(isset($_POST["submit"])){
+			
 			$firstname=isset($_POST['firstname'])?$_POST['firstname']:'';
 			$lastname=isset($_POST['lastname'])?$_POST['lastname']:'';
             $email=isset($_POST['email'])?$_POST['email']:'';
@@ -27,7 +28,7 @@
             else{
                 $user= new User();
                 $msg=$user->register($email,$name,$mobile,$pass,$question,$ans);
-				echo("<script>alert('.$msg.')</script>");
+				echo("<script>alert(".$msg.")</script>");
                 unset($_POST["submit"]);
           
                 if($msg!="User Name Already Present"){
@@ -65,19 +66,73 @@
 				$(".swipebox").swipebox();
 			});
 			$(document).ready(function(){
+				var check=0;
+				$('#firstname').on('keypress', function (event) {
+    				var regex = new RegExp("^[a-zA-Z\ ]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				});
+				$('#lastname').on('keypress', function (event) {
+    				var regex = new RegExp("^[a-zA-Z\ ]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				});
+				$('#email').on('keypress', function (event) {
+    				var regex = new RegExp("^[a-zA-Z0-9@\.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				});
+				$('#mobile').on('keypress', function (event) {
+    				var regex = new RegExp("^[0-9]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       					event.preventDefault();
+       				return false;
+    				}
+				});
 				$(".error").text("Please fill this field");
 				
-				$("#firstname").on("blur paste", function() {
+				$("#firstname").on("blur  paste", function(event) {
+					
 					var first = document.getElementById("firstname").value;	
+					if(first!=""){
+						$("#msgfirst").html("");
+						$("#firstname").css({"border": "1px solid green"});
+						fis=1;
+					}
+					else{
+						$("#msgfirst").html("Please fill this field");
+						$("#firstname").css({"border": "1px solid red"});
+					}
 					first = first.replace(/ {2,}/g,' ');
 					document.getElementById("firstname").value= first;
 					if(/\s/.test(first) != false) {
 						first=first.trim();
 						document.getElementById("firstname").value= first;
 						}	
-					});	
-				$("#lastname").on("blur paste", function() {
-					var last = document.getElementById("lastname").value;	
+					
+				});	
+				$("#lastname").on("blur paste", function(event) {
+					
+					var last = document.getElementById("lastname").value;
+					if(last!=""){
+						$("#msgsecond").html("");
+						$("#lastname").css({"border": "1px solid green"});
+						las=1;
+					}
+					else{
+						$("#msgsecond").html("Please fill this field");
+						$("#lastname").css({"border": "1px solid red"});
+					}	
 					last = last.replace(/ {2,}/g,' ');
 					document.getElementById("lastname").value= last;
 					if(/\s/.test(last) != false) {
@@ -86,38 +141,119 @@
 						}	
 				});			
 				$("#answer").on("blur paste", function() {
+					
 					var last = document.getElementById("answer").value;	
-					last = last.replace(/ {2,}/g,' ');
+					if(last!=""){
+						$("#msganswer").html("");
+						$("#answer").css({"border": "1px solid green"});
+						ans=1;
+					}
+					else{
+						
+						$("#msganswer").html("Please fill this field");
+						$("#answer").css({"border": "1px solid red"});
+					}	
+					last = last.replace(/ {1,}/g,'');
 					document.getElementById("answer").value= last;
 					if(/\s/.test(last) != false) {
 						last=last.trim();
 						document.getElementById("answer").value= last;
 						}	
 				});			
-				$("#email").on("keyup blur paste", function() {
+				$("#email").on("blur paste", function() {
+					
 					var email = document.getElementById("email").value;	
+					if(email!=""){
+						$("#msgemail").html("");
+						$("#email").css({"border": "1px solid green"});
+						ema=1;
+					}
+					else{
+						$("#email").css({"border": "1px solid red"});
+						$("#msgemail").html("Please fill this field");
+						
+					}	
+					var emailr = /\S+@\S+\.\S+/;
+					var emailregex = new RegExp('^[A-Za-z0-9.]+@[A-Za-z0-9]+\.[A-Za-z0-9]{2,4}$');
+					if (emailr.test(email)) {
+						if (emailregex.test(email)) {
+							$("#msgemail").html("");
+						}
+						else{
+							$("#msgemail").html("Please enter a valid email");
+							$("#email").css({"border": "1px solid red"});
+							document.getElementById("email").value="";
+						}	
+        			}
+					else{
+						$("#msgemail").html("Please enter a valid email");
+						$("#email").css({"border": "1px solid red"});
+						document.getElementById("email").value="";
+					}
+					
 					email = email.replace(/ {1,}/g,'');
 					email = email.replace(/\.{2,}/g,'\.');
 					document.getElementById("email").value= email;
 				});	
-				$("#password").on("keyup blur paste", function() {
+				$("#password").on("blur paste", function() {
+					
 					var email = document.getElementById("password").value;	
+					if(email!=""){
+						$("#msgpassword").html("");
+						var emailregex = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+						if (emailregex.test(email)) {
+								$("#msgpassword").html("");
+								$("#password").css({"border": "1px solid green"});
+								pas=1;
+							}
+						else{
+								$("#msgpassword").html("Combination of UPPERCASE, lowercase, special character and numeric value");
+								$("#password").css({"border": "1px solid red"});
+						}			
+        			}
+					else{
+						$("#msgpassword").html("Please fill this field");
+					}	
 					email = email.replace(/ {1,}/g,'');
 					document.getElementById("password").value= email;
 				});	
-				$("#repassword").on("keyup blur paste", function() {
-					var email = document.getElementById("repassword").value;	
+				$("#repassword").on("blur paste", function() {
+					
+					var email = document.getElementById("repassword").value;
+					if(email!=""){
+						$("#msgrepassword").html("");
+						var emailregex = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+						if (emailregex.test(email)) {
+								$("#msgrepassword").html("");
+								$("#repassword").css({"border": "1px solid green"});
+								repas=1;
+							}
+						else{
+							$("#msgrepassword").html("Combination of UPPERCASE, lowercase, special character and numeric value");
+							$("#repassword").css({"border": "1px solid red"});
+						}			
+					}
+					else{
+						$("#msgrepassword").html("Please fill this field");
+					}		
 					email = email.replace(/ {1,}/g,'');
 					document.getElementById("repassword").value= email;
 				});	
-				$("#mobile").on("keyup  paste", function() {
-					var mobile = document.getElementById("mobile").value;	
+				$("#mobile").on("blur keyup paste", function() {
+					var mobile = document.getElementById("mobile").value;
+					if(mobile!=""){
+						$("#msgmobile").html("");
+						mob=1;
+					}
+					else{
+						$("#msgmobile").html("Please fill this field");
+					}		
 					mobile = mobile.replace(/ {1,}/g,'');
 					var y=0;
 					var in1 = mobile.charAt(0);
 					var len = mobile.length;
 					var in2=mobile.charAt(1);
-					console.log(in1, in2);
+					
 					if(len>10 && in1!="0"){
 						alert("Invaild Number");
 						document.getElementById("mobile").value="";
@@ -126,7 +262,7 @@
 						alert("Invaild Number");
 						document.getElementById("mobile").value="";
 					}
-					else if(len==11){
+					else if(len>=11){
 						for(i=1;i<11;i++){
 							var ch = mobile.charAt(i);
 							if(i!=10){
@@ -159,7 +295,23 @@
 					}
 					
 				});		
-						
+				
+				$(":button").click(function(){
+					/*var fis = $("#msgfirst").html();
+					var las = $("#msgsecond").html();
+					var ans = $("#msganswer").html();
+					$("#msgemail").html();
+					$("#msgpassword").html();
+					$("#msgrepassword").html();
+					$("#msgmobile").html();*/
+					if(fis==1 && las==1 && ans==1 && ema==1 && pas==1 && repas==1 && mob==1){
+						$("input[name='submit']").prop("type", "submit");
+					}	
+					else{
+						return false;
+					}
+				});
+				
 			});	
 		</script>
 		<!--script-->
@@ -181,22 +333,22 @@
 						<div>
 							<span>First Name<label>*</label></span>
 							<input type="text" id="firstname" name="firstname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
-							<p class="error"></p>
+							<p class="error" id="msgfirst"></p>
 						</div>
 						<div>
 							<span>Last Name<label>*</label></span>
 							<input type="text" id="lastname" name="lastname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
-							<p class="error"></p>
+							<p class="error" id="msgsecond"></p>
 						</div>
 						<div>
 							<span>Email Address<label class="light-blue-text">*</label></span>
 							<input type="text" id="email" name="email" pattern="[a-z0-9.]+@[a-z0-9.-]+\.[a-z]{2,4}$"required> 
-							<p class="error"></p>
+							<p class="error" id="msgemail"></p>
 						</div>
 						<div> 
 							<span>Mobile<label>*</label></span>
 							<input type="text" id="mobile" name="mobile" pattern="[0-9]{10,11}" required> 
-							<p class="error"></p>
+							<p class="error" id="msgmobile"></p>
 						</div>
 						
 						<div class="clearfix"> </div>
@@ -209,12 +361,12 @@
 								<div>
 									<span>Password<label>*</label></span>
 									<input type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" required>
-									<p class="error"></p>
+									<p class="error" id="msgpassword"></p>
 								</div>
 								<div>
 									<span>Confirm Password<label>*</label></span>
 									<input type="password" id="repassword" name="repassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$" required>
-									<p class="error"></p>
+									<p class="error" id="msgrepassword"></p>
 								</div>
 						</div>
 						<div class="register-bottom-grid register-top-grid">
@@ -232,10 +384,10 @@
 								<div>
 									<span>Answer<label>*</label></span>
 									<input type="text" name="answer" id="answer" required> 
-									<p class="error"></p>
+									<p class="error" id="msganswer"></p>
 								</div>
 						</div>
-						<input class="aqua-gradient" type="submit" name="submit" value="submit">
+						<input class="aqua-gradient" type="button" name="submit" value="submit" >
 						
 						<div class="clearfix"> </div>
 					</form>

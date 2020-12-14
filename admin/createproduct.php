@@ -326,7 +326,6 @@
                 <div class="form-group">
                     <label for="category" class="form-control-label text-blue">Select Product Category</label>
                     <select id="question" class="form-control" name="category" required>
-                            <option class="place" value="" disabled selected>Select Category</option>
                             <?php foreach ($cd as $key=>$cdd){ ?>
                             <option class="place" value="<?php echo $cdd['id']; ?>"><?php echo $cdd['prod_name']; ?></option>
                             <?php } ?>
@@ -334,59 +333,69 @@
                 </div>
                 <div class="form-group">
                     <label for="subcategory" class="form-control-label text-blue">Enter Product Name *</label>
-                    <input class="form-control" name="name" type="text" placeholder="Sub-Category" id="subcategory">
+                    <input class="form-control" name="name" type="text" placeholder="Product Name" id="product">
+                    <p class="error" id="proer"></p>          
                 </div>
                 <div class="form-group">
                     <label for="example-url-input" class="form-control-label text-blue">URL</label>
-                    <input class="form-control" type="text" name="url" value="" id="example-url-input">
+                    <input class="form-control" type="text" name="url" value="" id="url">
+                   
                 </div>
                 <div class="border-top my-3"></div>
                 <p class="h2 text-blue">Product Description</p>
                 <p class="text-blue">Enter Product Description Below</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Enter Monthly Plan</label>
-                 <input class="form-control" type="number" name="monprice" value="" id="example-number-input">
+                 <input class="form-control" type="number" step="any" name="monprice" value="" id="monthly">
+                 <p class="error" id="moner"></p>  
                  <small id="emailHelp" class="form-text text-muted">This would be Monthly Plan</small>
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Enter Annual Price</label>
-                    <input class="form-control" type="number" name="yearprice" value="" id="example-number-input">
+                    <input class="form-control" type="number" step="any" name="yearprice" value="" id="annual">
+                    <p class="error" id="yearer"></p>  
                     <small id="emailHelp" class="form-text text-muted">This would be Annual Price</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">SKU</label>
-                    <input class="form-control" type="number" name="sku" value="" id="example-number-input">
+                    <input class="form-control" type="text"  name="sku" value="" id="sku">
+                    <p class="error" id="skuer"></p>  
                 </div>
                 <div class="border-top my-3 text-blue"></div>
                 <p class="h2 text-blue">Features</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Web Space (in GB)</label>
-                 <input class="form-control" type="number" name="webspace" value="" id="example-number-input">
+                 <input class="form-control" type="number" name="webspace" step="0.01" value="" id="webspace">
+                 <p class="error" id="weber"></p>  
                  <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Bandwidth (in GB)</label>
-                    <input class="form-control" type="number" name="Bandwidth" value="" id="example-number-input">
+                    <input class="form-control" type="number" name="Bandwidth" step="0.01" value="" id="bandwidth">
+                    <p class="error" id="bander"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Free Domain</label>
-                    <input class="form-control" type="text" name="domain" value="" id="example-number-input">
+                    <input class="form-control" type="text" name="domain" step="any" value="" id="domain">
+                    <p class="error" id="domainer"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter 0 if no domain available in this service</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Language/Technology Support</label>
-                    <input class="form-control" type="text" name="stack" value="" id="example-number-input">
+                    <input class="form-control" type="text" name="stack" step="any" value="" id="stack">
+                    <p class="error" id="stacker"></p>  
                     <small id="emailHelp" class="form-text text-muted">Separate by (,) Ex: PHP, MySQL, MongoDB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Mail Box</label>
-                    <input class="form-control" type="text" name="Mail" value="" id="example-number-input">
+                    <input class="form-control" type="number" step="any" name="Mail" value="" id="mail">
+                    <p class="error" id="mailer"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter Number of mailbox will be provided, enter 0 if none</small>
 
                 </div>
@@ -418,7 +427,212 @@
 <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function(){
-            $('#categorytable').DataTable({});    
+          $(".error").text("Please fill this field");
+          $('#categorytable').DataTable({});    
+          $('#product').on('keypress', function (event) {
+    				var regex = new RegExp("^[a-zA-Z0-9\ -]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#monthly').on('keypress', function (event) {
+    				var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#annual').on('keypress', function (event) {
+    				var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          
+          $('#sku').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9#-]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          
+          $('#webspace').on('keypress', function (event) {
+    				var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#bandwidth').on('keypress', function (event) {
+            var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#domain').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#stack').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9,]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#mail').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#monthly, #annual, #webspace, #bandwidth').on("blur paste", function() {
+            var month = document.getElementById("monthly").value;	
+            var annual = document.getElementById("annual").value;	
+            var webspace = document.getElementById("webspace").value;	
+            var band = document.getElementById("bandwidth").value;	
+            var len = month.length;
+            var len1 = annual.length;
+            var len2 = webspace.length;
+            var len3 = bandwidth.length;
+            if(webspace!=""||band!=""){
+              if(len2>5){
+                document.getElementById("webspace").value="";
+                $("#weber").html("Limit Exceed");
+                $("#webspace").css({"border": "1px solid red"}); 
+              }
+              else if(len3>5){
+                document.getElementById("bandwidth").value="";
+                $("#bander").html("Limit Exceed");
+                $("#bandwidth").css({"border": "1px solid red"}); 
+              }
+              else{
+                $("#bander").html("");
+                $("#weber").html("");
+                mon=1;
+                annual=1;
+              }
+            }
+            else{
+              $("#bander").html("Please Fill this Field");
+            }
+            if(month!=""||annual!=""){
+              if(len>15){
+                document.getElementById("monthly").value="";
+                $("#moner").html("Limit Exceed");
+                $("#monthly").css({"border": "1px solid red"}); 
+              }
+              else if(len1>15){
+                document.getElementById("annual").value="";
+                $("#annual").css({"border": "1px solid red"});
+                $("#yearer").html("Limit Exceed");
+              }
+              else if(month!=""&&len<=15){
+                $("#moner").html("");
+                $("#monthly").css({"border": "1px solid green"}); 
+                mon=1;
+              }
+              else if(len1<=15){
+                $("#annual").css({"border": "1px solid green"}); 
+                $("#yearer").html("");
+                annual=1;
+              }
+            }
+            else{
+              $("#moner").html("Please Fill This Field");
+            }  
+          });
+          $("#product").on("blur paste", function(event) {
+            var text = document.getElementById("product").value;	
+            if(text!=""){
+              $("#proer").html("");
+              text = text.replace(/\-{2,}/g,'.');
+              text = text.replace(/\ {2,}/g,' ');
+              document.getElementById("product").value= text;
+              var categoryregex = new RegExp("^[a-zA-z][0-9a-zA-Z\-\ ]+$");
+						  if (categoryregex.test(text)){
+								$("#proer").html("");
+                if(/\s/.test(text) != false) {
+                  text=text.trim();
+                  document.getElementById("product").value= text;
+                  $("#proer").html("");
+                  $("#product").css({"border": "1px solid green"});
+                  subc=1;
+                }	
+								$("#product").css({"border": "1px solid green"});
+                subc=1;
+							}
+						  else{
+								$("#proer").html("Please begin with Alphabets");
+                $("#product").css({"border": "1px solid red"});
+                if(/\s/.test(text) != false) {
+                  text=text.trim();
+                  document.getElementById("product").value= text;
+                  $("#proer").html("");
+                  $("#product").css({"border": "1px solid green"});
+                  subc=1;
+                }	
+                
+					  	}		
+            }
+            else{
+              $("#proer").html("Please fill this field");
+              $("#product").css({"border": "1px solid red"});
+            }
+				  });	
+          $("#sku").on("blur paste", function(event) {
+            var text = document.getElementById("sku").value;	
+            if(text!=""){
+              var categoryregex = new RegExp("^[0-9a-zA-Z#-][a-zA-z0-9]+$");
+              if (categoryregex.test(text)){
+								$("#skuer").html("");
+                $("#sku").css({"border": "1px solid green"});
+              }
+              else{
+                $("#skuer").html("No Special Character in Ending");
+                $("#sku").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#skuer").html("Please fill this field");
+              $("#sku").css({"border": "1px solid red"});
+            }
+          });
+          $("#sku").on("blur paste", function(event) {
+            var text = document.getElementById("sku").value;	
+            if(text!=""){
+              var categoryregex = new RegExp("^[0-9a-zA-Z#-][a-zA-z0-9]+$");
+              if (categoryregex.test(text)){
+								$("#skuer").html("");
+                $("#sku").css({"border": "1px solid green"});
+              }
+              else{
+                $("#skuer").html("No Special Character in Ending");
+                $("#sku").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#skuer").html("Please fill this field");
+              $("#sku").css({"border": "1px solid red"});
+            }
+          });
          });
     </script>
 </html>
