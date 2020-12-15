@@ -213,6 +213,7 @@
         			}
 					else{
 						$("#msgpassword").html("Please fill this field");
+						$("#password").css({"border": "1px solid red"});
 					}	
 					email = email.replace(/ {1,}/g,'');
 					document.getElementById("password").value= email;
@@ -235,6 +236,7 @@
 					}
 					else{
 						$("#msgrepassword").html("Please fill this field");
+						$("#repassword").css({"border": "1px solid red"});
 					}		
 					email = email.replace(/ {1,}/g,'');
 					document.getElementById("repassword").value= email;
@@ -332,12 +334,12 @@
 						<p>(* means Required)</p>
 						<div>
 							<span>First Name<label>*</label></span>
-							<input type="text" id="firstname" name="firstname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
+							<input type="text" id="firstname" name="firstname" > 
 							<p class="error" id="msgfirst"></p>
 						</div>
 						<div>
 							<span>Last Name<label>*</label></span>
-							<input type="text" id="lastname" name="lastname" pattern="[a-zA-Z][a-zA-Z ]{1,}"required> 
+							<input type="text" id="lastname" name="lastname" > 
 							<p class="error" id="msgsecond"></p>
 						</div>
 						<div>

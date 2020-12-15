@@ -57,266 +57,7 @@
 <body>
   <!-- Sidenav -->
   <?php require_once("sidebar.php"); ?>
-  <!-- Main content -->
-  <div class="main-content" id="panel">
-    <!-- Topnav -->
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-              </div>
-            </div>
-            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </form>
-          <!-- Navbar links -->
-          <ul class="navbar-nav align-items-center  ml-md-auto ">
-            <li class="nav-item d-xl-none">
-              <!-- Sidenav toggler -->
-              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item d-sm-none">
-              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                <i class="ni ni-zoom-split-in"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ni ni-bell-55"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
-                <!-- Dropdown header -->
-                <div class="px-3 py-3">
-                  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
-                </div>
-                <!-- List group -->
-                <div class="list-group list-group-flush">
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-1.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-2.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-3.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>5 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Your posts have been liked a lot.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-4.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-5.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <!-- View all -->
-                <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ni ni-ungroup"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
-                <div class="row shortcuts px-4">
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-red">
-                      <i class="ni ni-calendar-grid-58"></i>
-                    </span>
-                    <small>Calendar</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
-                      <i class="ni ni-email-83"></i>
-                    </span>
-                    <small>Email</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-info">
-                      <i class="ni ni-credit-card"></i>
-                    </span>
-                    <small>Payments</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
-                      <i class="ni ni-books"></i>
-                    </span>
-                    <small>Reports</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
-                      <i class="ni ni-pin-3"></i>
-                    </span>
-                    <small>Maps</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
-                      <i class="ni ni-basket"></i>
-                    </span>
-                    <small>Shop</small>
-                  </a>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-            <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="media align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
-                   <i class="ni ni-circle-08 text-danger"></i>
-                  </span>
-                  <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $ud['name']; ?></span>
-                  </div>
-                </div>
-              </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-calendar-grid-58"></i>
-                  <span>Activity</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-support-16"></i>
-                  <span>Support</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- Header -->
-    <!-- Header -->
-    <div class="header bg-primary pb-6">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
-                </ol>
-              </nav>
-            </div>
-            
-          </div>
-          <!-- Card stats -->
-          <div class="row">
-           
-          </div>
-        </div>
-      </div>
-    </div>
+  
     <!-- Page content -->
     <div class="container-fluid mt--6">
       <div class="row mt-5">
@@ -346,13 +87,13 @@
                 <p class="text-blue">Enter Product Description Below</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Enter Monthly Plan</label>
-                 <input class="form-control" type="number" step="any" name="monprice" value="" id="monthly">
+                 <input class="form-control" type="number" step="any" min="0" name="monprice" value="" id="monthly">
                  <p class="error" id="moner"></p>  
                  <small id="emailHelp" class="form-text text-muted">This would be Monthly Plan</small>
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Enter Annual Price</label>
-                    <input class="form-control" type="number" step="any" name="yearprice" value="" id="annual">
+                    <input class="form-control" type="number" step="any" min="0" name="yearprice" value="" id="annual">
                     <p class="error" id="yearer"></p>  
                     <small id="emailHelp" class="form-text text-muted">This would be Annual Price</small>
 
@@ -366,14 +107,14 @@
                 <p class="h2 text-blue">Features</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Web Space (in GB)</label>
-                 <input class="form-control" type="number" name="webspace" step="0.01" value="" id="webspace">
+                 <input class="form-control" type="number" name="webspace" min="0" step="0.01" value="" id="webspace">
                  <p class="error" id="weber"></p>  
                  <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Bandwidth (in GB)</label>
-                    <input class="form-control" type="number" name="Bandwidth" step="0.01" value="" id="bandwidth">
+                    <input class="form-control" type="number" name="Bandwidth" min="0" step="0.01" value="" id="bandwidth">
                     <p class="error" id="bander"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
@@ -394,12 +135,12 @@
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Mail Box</label>
-                    <input class="form-control" type="number" step="any" name="Mail" value="" id="mail">
+                    <input class="form-control" type="text" name="Mail" value="" id="mail">
                     <p class="error" id="mailer"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter Number of mailbox will be provided, enter 0 if none</small>
 
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
+                <button type="button" name="submit" class="btn btn-primary">Add Product</button>
             </form>
 
         </div>
@@ -511,27 +252,33 @@
             var len = month.length;
             var len1 = annual.length;
             var len2 = webspace.length;
-            var len3 = bandwidth.length;
+            var len3 = band.length;
             if(webspace!=""||band!=""){
               if(len2>5){
                 document.getElementById("webspace").value="";
                 $("#weber").html("Limit Exceed");
                 $("#webspace").css({"border": "1px solid red"}); 
               }
-              else if(len3>5){
+              if(len3>5){
                 document.getElementById("bandwidth").value="";
                 $("#bander").html("Limit Exceed");
                 $("#bandwidth").css({"border": "1px solid red"}); 
               }
-              else{
-                $("#bander").html("");
+              if(len2<=5 && webspace!=""){
                 $("#weber").html("");
-                mon=1;
-                annual=1;
+                $("#webspace").css({"border": "1px solid green"});
+                webc=1;
+              }
+              if(len3<=5 && band!=""){
+                $("#bander").html("");
+                $("#bandwidth").css({"border": "1px solid green"}); 
+                bandc=1;
               }
             }
             else{
               $("#bander").html("Please Fill this Field");
+              $("#webspace").css({"border": "1px solid none"});
+              $("#bandwidth").css({"border": "1px solid none"});
             }
             if(month!=""||annual!=""){
               if(len>15){
@@ -544,52 +291,46 @@
                 $("#annual").css({"border": "1px solid red"});
                 $("#yearer").html("Limit Exceed");
               }
-              else if(month!=""&&len<=15){
+              if(month!=""&&len<=15){
                 $("#moner").html("");
                 $("#monthly").css({"border": "1px solid green"}); 
-                mon=1;
+                monc=1;
               }
-              else if(len1<=15){
+              if(len1<=15 && annual!=""){
                 $("#annual").css({"border": "1px solid green"}); 
                 $("#yearer").html("");
-                annual=1;
+                annualc=1;
               }
             }
-            else{
+            if(month==""){
               $("#moner").html("Please Fill This Field");
+              $("#monthly").css({"border": "1px solid red"}); 
             }  
+            if(annual==""){
+                $("#annual").css({"border": "1px solid red"}); 
+                $("#yearer").html("Please Fill This Field");
+            }
+           
           });
           $("#product").on("blur paste", function(event) {
             var text = document.getElementById("product").value;	
             if(text!=""){
               $("#proer").html("");
-              text = text.replace(/\-{2,}/g,'.');
+              text = text.replace(/\-{2,}/g,'-');
               text = text.replace(/\ {2,}/g,' ');
               document.getElementById("product").value= text;
-              var categoryregex = new RegExp("^[a-zA-z][0-9a-zA-Z\-\ ]+$");
+              var categoryregex = new RegExp("^[a-zA-z][0-9a-zA-Z\-\ ]+[a-zA-z0-9]+$|^[a-zA-z][0-9a-zA-Z\ ]+$");
 						  if (categoryregex.test(text)){
 								$("#proer").html("");
-                if(/\s/.test(text) != false) {
-                  text=text.trim();
-                  document.getElementById("product").value= text;
-                  $("#proer").html("");
-                  $("#product").css({"border": "1px solid green"});
-                  subc=1;
-                }	
-								$("#product").css({"border": "1px solid green"});
-                subc=1;
+                text=text.trim();
+                document.getElementById("product").value= text;
+                $("#proer").html("");
+                $("#product").css({"border": "1px solid green"});
+                productc=1;
 							}
 						  else{
-								$("#proer").html("Please begin with Alphabets");
-                $("#product").css({"border": "1px solid red"});
-                if(/\s/.test(text) != false) {
-                  text=text.trim();
-                  document.getElementById("product").value= text;
-                  $("#proer").html("");
-                  $("#product").css({"border": "1px solid green"});
-                  subc=1;
-                }	
-                
+								$("#proer").html("Invalid!");
+                $("#product").css({"border": "1px solid red"});                
 					  	}		
             }
             else{
@@ -600,10 +341,12 @@
           $("#sku").on("blur paste", function(event) {
             var text = document.getElementById("sku").value;	
             if(text!=""){
-              var categoryregex = new RegExp("^[0-9a-zA-Z#-][a-zA-z0-9]+$");
+              
+              var categoryregex = new RegExp("^[0-9a-zA-Z#-]+[a-zA-z0-9]+$");
               if (categoryregex.test(text)){
 								$("#skuer").html("");
                 $("#sku").css({"border": "1px solid green"});
+                sku=1;
               }
               else{
                 $("#skuer").html("No Special Character in Ending");
@@ -615,24 +358,78 @@
               $("#sku").css({"border": "1px solid red"});
             }
           });
-          $("#sku").on("blur paste", function(event) {
-            var text = document.getElementById("sku").value;	
+          $("#stack").on("blur paste", function(event) {
+            var text = document.getElementById("stack").value;	
             if(text!=""){
-              var categoryregex = new RegExp("^[0-9a-zA-Z#-][a-zA-z0-9]+$");
+              text = text.replace(/\,{2,}/g,',');
+              text = text.replace(/ {1,}/g,'');
+              document.getElementById("stack").value=text;
+              var categoryregex = new RegExp("^[a-zA-Z][a-zA-z0-9\,]+[a-zA-z0-9]+$");
               if (categoryregex.test(text)){
-								$("#skuer").html("");
-                $("#sku").css({"border": "1px solid green"});
+								$("#stacker").html("");
+                $("#stack").css({"border": "1px solid green"});
+                stack=1;
               }
               else{
-                $("#skuer").html("No Special Character in Ending");
-                $("#sku").css({"border": "1px solid red"});
+                $("#stacker").html("No number or Special Character in starting");
+                $("#stack").css({"border": "1px solid red"});
               }
             }
             else{
-              $("#skuer").html("Please fill this field");
-              $("#sku").css({"border": "1px solid red"});
+              $("#stacker").html("Please fill this field");
+              $("#stack").css({"border": "1px solid red"});
             }
           });
+          $("#domain").on("blur paste", function(event) {
+            var text = document.getElementById("domain").value;	
+           	
+            if(text!=""){
+              var categoryregex = new RegExp("");
+              var categoryregex1 = new RegExp("");
+              if (categoryregex.test(text)||categoryregex1.test(text)){
+								$("#domainer").html("");
+                $("#domain").css({"border": "1px solid green"});
+                domain=1;
+              }
+              else{
+                $("#domainer").html("No Special Character in Ending");
+                $("#domain").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#domainer").html("Please fill this field");
+              $("#domain").css({"border": "1px solid red"});
+            }
+          });
+            $("#mail").on("blur paste", function(event) {
+              var mail = document.getElementById("mail").value;
+            if(mail!=""){
+              var categoryregex = new RegExp("^[0-9]+$");
+              var categoryregex1 = new RegExp("^[a-zA-Z]+$");
+              if (categoryregex.test(mail)||categoryregex1.test(mail)){
+								$("#mailer").html("");
+                $("#mail").css({"border": "1px solid green"});
+                mailc=1
+              }
+              else{
+                $("#mailer").html("Invalid");
+                $("#mail").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#mailer").html("Please fill this field");
+              $("#mail").css({"border": "1px solid red"});
+            }
+          });
+          $(":button").click(function(){
+              if(webc==1 && bandc==1 && monc==1 && annualc==1 && productc==1 && sku==1 && mailc==1 && domain==1 && stack==1)
+              {
+                $("button[name='submit']").prop("type", "submit");
+              }	
+              else{
+                return false;
+              }
+            });
          });
     </script>
 </html>

@@ -7,20 +7,24 @@
   $user= new User();
   $product= new Product();
   $ud=$user->userdetails($_SESSION['userdata']['username']); 
-  if(isset($_POST['submit'])){
-    $category=isset($_POST['subcategory'])?$_POST['subcategory']:'';
-    $link=isset($_POST['link'])?$_POST['link']:'';
-    $msg=$product->addcategory($category,$link);
-    unset($_POST);
-    echo "<script type='text/javascript'>alert('".$msg."');</script>";
-  }
   if(isset($_POST['update'])){
     $id=isset($_POST['id'])?$_POST['id']:'';
-    $category=isset($_POST['subcategory'])?$_POST['subcategory']:'';
-    $link=isset($_POST['link'])?$_POST['link']:'';
+    $category=isset($_POST['category'])?$_POST['category']:'';
+    $name=isset($_POST['name'])?$_POST['name']:'';
+    $link=isset($_POST['url'])?$_POST['url']:'';
+    $mon=isset($_POST['monprice'])?$_POST['monprice']:'';
+    $year=isset($_POST['yearprice'])?$_POST['yearprice']:'';
+    $sku=isset($_POST['sku'])?$_POST['sku']:'';
+    $webspace=isset($_POST['webspace'])?$_POST['webspace']:'';
+    $bandwidth=isset($_POST['Bandwidth'])?$_POST['Bandwidth']:'';
+    $stack=isset($_POST['stack'])?$_POST['stack']:'';
+    $domain=isset($_POST['domain'])?$_POST['domain']:'';
+    $mail=isset($_POST['Mail'])?$_POST['Mail']:'';
     $avail=isset($_POST['available'])?$_POST['available']:'';
-    $msg=$product->updatecategory($id,$category,$link,$avail);
-    unset($_POST);
+    $desc = array("webspace"=>$webspace, "Bandwidth"=>$bandwidth, "Domain"=>"$domain", "Stack"=> $stack ,"Mail"=>"$mail");
+    $desc=json_encode($desc);
+    $msg=$product->updateproduct($id,$category,$name,$link,$desc,$mon,$year,$sku,$avail);
+                                 
     echo "<script type='text/javascript'>alert('".$msg."');</script>";
   }
   $cd=$product->productdetails(1);
@@ -56,272 +60,14 @@
 <body>
   <!-- Sidenav -->
   <?php require_once("sidebar.php"); ?>
-  <!-- Main content -->
-  <div class="main-content" id="panel">
-    <!-- Topnav -->
-    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <!-- Search form -->
-          <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative input-group-merge">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-search"></i></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text">
-              </div>
-            </div>
-            <button type="button" class="close" data-action="search-close" data-target="#navbar-search-main" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </form>
-          <!-- Navbar links -->
-          <ul class="navbar-nav align-items-center  ml-md-auto ">
-            <li class="nav-item d-xl-none">
-              <!-- Sidenav toggler -->
-              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item d-sm-none">
-              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                <i class="ni ni-zoom-split-in"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ni ni-bell-55"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
-                <!-- Dropdown header -->
-                <div class="px-3 py-3">
-                  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
-                </div>
-                <!-- List group -->
-                <div class="list-group list-group-flush">
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-1.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-2.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-3.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>5 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Your posts have been liked a lot.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-4.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="assets/img/theme/team-5.jpg" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <!-- View all -->
-                <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ni ni-ungroup"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
-                <div class="row shortcuts px-4">
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-red">
-                      <i class="ni ni-calendar-grid-58"></i>
-                    </span>
-                    <small>Calendar</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
-                      <i class="ni ni-email-83"></i>
-                    </span>
-                    <small>Email</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-info">
-                      <i class="ni ni-credit-card"></i>
-                    </span>
-                    <small>Payments</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
-                      <i class="ni ni-books"></i>
-                    </span>
-                    <small>Reports</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
-                      <i class="ni ni-pin-3"></i>
-                    </span>
-                    <small>Maps</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
-                      <i class="ni ni-basket"></i>
-                    </span>
-                    <small>Shop</small>
-                  </a>
-                </div>
-              </div>
-            </li>
-          </ul>
-          <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-            <li class="nav-item dropdown">
-              <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="media align-items-center">
-                  <span class="avatar avatar-sm rounded-circle">
-                   <i class="ni ni-circle-08 text-danger"></i>
-                  </span>
-                  <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold"><?php echo $ud['name']; ?></span>
-                  </div>
-                </div>
-              </a>
-              <div class="dropdown-menu  dropdown-menu-right ">
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-calendar-grid-58"></i>
-                  <span>Activity</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-support-16"></i>
-                  <span>Support</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- Header -->
-    <!-- Header -->
-    <div class="header bg-primary pb-6">
-      <div class="container-fluid">
-        <div class="header-body">
-          <div class="row align-items-center py-4">
-            <div class="col-lg-6 col-7">
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
-                </ol>
-              </nav>
-            </div>
-            
-          </div>
-          <!-- Card stats -->
-          <div class="row">
-           
-          </div>
-        </div>
-      </div>
-    </div>
+  
     <!-- Page content -->
     <div class="container-fluid mt--6">
       <div class="row mt-5">
         <div class="col mt-5">
            <h1 class="center-text text-blue">View Product</h1>
            <form class="form" id="form" action="viewproduct.php" method="POST">
+                
                 <div class="form-group">
                     <label for="category" class="form-control-label text-blue">Select Product Category</label>
                     <select id="question" class="form-control" name="category" required>
@@ -332,8 +78,12 @@
                     </select> 
                 </div>
                 <div class="form-group">
+                    <input class="form-control" name="id" type="text" id="id" hidden>
+                </div>
+                <div class="form-group">
                     <label for="subcategory" class="form-control-label text-blue">Enter Product Name *</label>
-                    <input class="form-control" name="name" type="text" placeholder="Sub-Category" id="subcategory">
+                    <input class="form-control" name="name" type="text" placeholder="Product Name" id="product">
+                    <p class="error" id="proer"></p>          
                 </div>
                 <div class="form-group">
                     <label for="example-url-input" class="form-control-label text-blue">URL</label>
@@ -344,48 +94,56 @@
                 <p class="text-blue">Enter Product Description Below</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Enter Monthly Plan</label>
-                 <input class="form-control" type="number" name="monprice" value="" id="mon">
+                 <input class="form-control" type="number" step="any" min="0" name="monprice" value="" id="monthly">
+                 <p class="error" id="moner"></p>  
                  <small id="emailHelp" class="form-text text-muted">This would be Monthly Plan</small>
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Enter Annual Price</label>
-                    <input class="form-control" type="number" name="yearprice" value="" id="annual">
+                    <input class="form-control" type="number" step="any" min="0" name="yearprice" value="" id="annual">
+                    <p class="error" id="yearer"></p>  
                     <small id="emailHelp" class="form-text text-muted">This would be Annual Price</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">SKU</label>
-                    <input class="form-control" type="number" name="sku" value="" id="sku">
+                    <input class="form-control" type="text"  name="sku" value="" id="sku">
+                    <p class="error" id="skuer"></p>  
                 </div>
                 <div class="border-top my-3 text-blue"></div>
                 <p class="h2 text-blue">Features</p>
                 <div class="form-group">
                  <label for="example-number-input" class="form-control-label text-blue">Web Space (in GB)</label>
-                 <input class="form-control" type="number" name="webspace" value="" id="web">
+                 <input class="form-control" type="number" name="webspace" min="0" step="0.01" value="" id="webspace">
+                 <p class="error" id="weber"></p>  
                  <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Bandwidth (in GB)</label>
-                    <input class="form-control" type="number" name="Bandwidth" value="" id="band">
+                    <input class="form-control" type="number" name="Bandwidth" min="0" step="0.01" value="" id="bandwidth">
+                    <p class="error" id="bander"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter 0.5 for 512 MB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Free Domain</label>
-                    <input class="form-control" type="text" name="domain" value="" id="domain">
+                    <input class="form-control" type="text" name="domain" step="any" value="" id="domain">
+                    <p class="error" id="domainer"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter 0 if no domain available in this service</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Language/Technology Support</label>
-                    <input class="form-control" type="text" name="stack" value="" id="stack">
+                    <input class="form-control" type="text" name="stack" step="any" value="" id="stack">
+                    <p class="error" id="stacker"></p>  
                     <small id="emailHelp" class="form-text text-muted">Separate by (,) Ex: PHP, MySQL, MongoDB</small>
 
                 </div>
                 <div class="form-group">
                     <label for="example-number-input" class="form-control-label text-blue">Mail Box</label>
                     <input class="form-control" type="text" name="Mail" value="" id="mail">
+                    <p class="error" id="mailer"></p>  
                     <small id="emailHelp" class="form-text text-muted">Enter Number of mailbox will be provided, enter 0 if none</small>
 
                 </div>
@@ -397,7 +155,7 @@
                       </select>
                 </div>
                 <button type="submit" name="update" class="btn btn-primary">Update Product</button>
-            </form>
+           </form>
 
         </div>
       </div>
@@ -518,13 +276,13 @@
                     var av =currentRow.find('avail').text(); 
                     console.log(name);
                     $('#id').val(id); 
-                    $('#subcategory').val(name);
+                    $('#product').val(name);
                     $('#link').val(link);
-                    $('#web').val(web);
-                    $('#band').val(band);
+                    $('#webspace').val(web);
+                    $('#bandwidth').val(band);
                     $('#domain').val(domain);
                     $('#mail').val(mail);
-                    $('#mon').val(mon);
+                    $('#monthly').val(mon);
                     $('#annual').val(annual);
                     $('#sku').val(sku);
                     $('#stack').val(lang);
@@ -539,5 +297,267 @@
                   }
                 });
          });
+         
+        
+          $(".error").text("Please fill this field");
+         
+          $('#product').on('keypress', function (event) {
+    				var regex = new RegExp("^[a-zA-Z0-9\ -]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#monthly').on('keypress', function (event) {
+    				var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#annual').on('keypress', function (event) {
+    				var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          
+          $('#sku').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9#-]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          
+          $('#webspace').on('keypress', function (event) {
+    				var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#bandwidth').on('keypress', function (event) {
+            var regex = new RegExp("^[0-9.]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#domain').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#stack').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9,]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#mail').on('keypress', function (event) {
+    				var regex = new RegExp("^[A-Za-z0-9]+$");
+    				var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    				if (!regex.test(key)) {
+       				event.preventDefault();
+       				return false;
+    				}
+				  });
+          $('#monthly, #annual, #webspace, #bandwidth').on("blur paste", function() {
+            var month = document.getElementById("monthly").value;	
+            var annual = document.getElementById("annual").value;	
+            var webspace = document.getElementById("webspace").value;	
+            var band = document.getElementById("bandwidth").value;	
+            var len = month.length;
+            var len1 = annual.length;
+            var len2 = webspace.length;
+            var len3 = band.length;
+            if(webspace!=""||band!=""){
+              if(len2>5){
+                document.getElementById("webspace").value="";
+                $("#weber").html("Limit Exceed");
+                $("#webspace").css({"border": "1px solid red"}); 
+              }
+              if(len3>5){
+                document.getElementById("bandwidth").value="";
+                $("#bander").html("Limit Exceed");
+                $("#bandwidth").css({"border": "1px solid red"}); 
+              }
+              if(len2<=5 && webspace!=""){
+                $("#weber").html("");
+                $("#webspace").css({"border": "1px solid green"});
+                web=1;
+              }
+              if(len3<=5 && band!=""){
+                $("#bander").html("");
+                $("#bandwidth").css({"border": "1px solid green"}); 
+                band=1;
+              }
+            }
+            else{
+              $("#bander").html("Please Fill this Field");
+              $("#webspace").css({"border": "1px solid none"});
+              $("#bandwidth").css({"border": "1px solid none"});
+            }
+            if(month!=""||annual!=""){
+              if(len>15){
+                document.getElementById("monthly").value="";
+                $("#moner").html("Limit Exceed");
+                $("#monthly").css({"border": "1px solid red"}); 
+              }
+              else if(len1>15){
+                document.getElementById("annual").value="";
+                $("#annual").css({"border": "1px solid red"});
+                $("#yearer").html("Limit Exceed");
+              }
+              if(month!=""&&len<=15){
+                $("#moner").html("");
+                $("#monthly").css({"border": "1px solid green"}); 
+                mon=1;
+              }
+              if(len1<=15 && annual!=""){
+                $("#annual").css({"border": "1px solid green"}); 
+                $("#yearer").html("");
+                annual=1;
+              }
+            }
+            if(month==""){
+              $("#moner").html("Please Fill This Field");
+              $("#monthly").css({"border": "1px solid red"}); 
+            }  
+            if(annual==""){
+                $("#annual").css({"border": "1px solid red"}); 
+                $("#yearer").html("Please Fill This Field");
+            }
+           
+          });
+          $("#product").on("blur paste", function(event) {
+            var text = document.getElementById("product").value;	
+            if(text!=""){
+              $("#proer").html("");
+              text = text.replace(/\-{2,}/g,'-');
+              text = text.replace(/\ {2,}/g,' ');
+              document.getElementById("product").value= text;
+              var categoryregex = new RegExp("^[a-zA-z][0-9a-zA-Z\-\ ]+[a-zA-z0-9]+$|^[a-zA-z][0-9a-zA-Z\ ]+$");
+						  if (categoryregex.test(text)){
+								$("#proer").html("");
+                text=text.trim();
+                document.getElementById("product").value= text;
+                $("#proer").html("");
+                $("#product").css({"border": "1px solid green"});
+                subc=1;
+							}
+						  else{
+								$("#proer").html("Invalid!");
+                $("#product").css({"border": "1px solid red"});
+                if(/\s/.test(text) != false) {
+                  text=text.trim();
+                  document.getElementById("product").value= text;
+                  $("#proer").html("");
+                  $("#product").css({"border": "1px solid green"});
+                  subc=1;
+                }	
+                
+					  	}		
+            }
+            else{
+              $("#proer").html("Please fill this field");
+              $("#product").css({"border": "1px solid red"});
+            }
+				  });	
+          $("#sku").on("blur paste", function(event) {
+            var text = document.getElementById("sku").value;	
+            if(text!=""){
+              
+              var categoryregex = new RegExp("^[0-9a-zA-Z#-]+[a-zA-z0-9]+$");
+              if (categoryregex.test(text)){
+								$("#skuer").html("");
+                $("#sku").css({"border": "1px solid green"});
+              }
+              else{
+                $("#skuer").html("No Special Character in Ending");
+                $("#sku").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#skuer").html("Please fill this field");
+              $("#sku").css({"border": "1px solid red"});
+            }
+          });
+          $("#stack").on("blur paste", function(event) {
+            var text = document.getElementById("stack").value;	
+            if(text!=""){
+              text = text.replace(/\,{2,}/g,',');
+              text = text.replace(/ {1,}/g,'');
+              document.getElementById("stack").value=text;
+              var categoryregex = new RegExp("^[a-zA-Z][a-zA-z0-9\,]+[a-zA-z0-9]+$");
+              if (categoryregex.test(text)){
+								$("#stacker").html("");
+                $("#stack").css({"border": "1px solid green"});
+              }
+              else{
+                $("#stacker").html("No number or Special Character in starting");
+                $("#stack").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#stacker").html("Please fill this field");
+              $("#stack").css({"border": "1px solid red"});
+            }
+          });
+          $("#domain").on("blur paste", function(event) {
+            var text = document.getElementById("domain").value;	
+           	
+            if(text!=""){
+              var categoryregex = new RegExp("");
+              var categoryregex1 = new RegExp("");
+              if (categoryregex.test(text)||categoryregex1.test(text)){
+								$("#domainer").html("");
+                $("#domain").css({"border": "1px solid green"});
+              }
+              else{
+                $("#domainer").html("No Special Character in Ending");
+                $("#domain").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#domainer").html("Please fill this field");
+              $("#domain").css({"border": "1px solid red"});
+            }
+          });
+            $("#mail").on("blur paste", function(event) {
+              var mail = document.getElementById("mail").value;
+            if(mail!=""){
+              var categoryregex = new RegExp("^[0-9]+$");
+              var categoryregex1 = new RegExp("^[a-zA-Z]+$");
+              if (categoryregex.test(mail)||categoryregex1.test(mail)){
+								$("#mailer").html("");
+                $("#mail").css({"border": "1px solid green"});
+              }
+              else{
+                $("#mailer").html("Invalid");
+                $("#mail").css({"border": "1px solid red"});
+              }
+            }
+            else{
+              $("#mailer").html("Please fill this field");
+              $("#mail").css({"border": "1px solid red"});
+            }
+          });
+
+        
+   
     </script>
 </html>

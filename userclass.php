@@ -71,7 +71,6 @@ class User extends DatabaseClass
             }    
         }
     public function approveuser($mobile,$email,$userid){
-        
             if($mobile==""){
                 $sql= "UPDATE `tbl_user` SET `email`='".$email."',`email_approved`='1', `active`='1' WHERE id='".$userid."'";
                 $result= $this->conn->query($sql);

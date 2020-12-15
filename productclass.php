@@ -35,6 +35,17 @@ class Product extends DatabaseClass
         $result= $this->conn->query($sql);
         return "Product added!";
     }   
+    public function updateproduct($id,$pid,$prod,$link,$desc,$mon_price,$annual,$sku,$avail)  
+    {  
+        date_default_timezone_set('Asia/Kolkata');
+        $sql= "UPDATE `tbl_product` SET prod_parent_id='".$pid."', `prod_name`='".$prod."', `link`='".$link."', `prod_available`='".$avail."' WHERE id='".$id."'";
+        echo 
+        $result= $this->conn->query($sql);
+        
+        $sql =  "UPDATE `tbl_product_description` SET `description`='".$desc."',`mon_price`='".$mon_price."',`annual_price`='".$annual."',`sku`='".$sku."' where prod_id='".$id."'";
+        $result= $this->conn->query($sql);
+        return "Product update!";
+    }   
     public function updatecategory($id,$prod,$link,$avail){
             $sql= "SELECT * FROM tbl_product WHERE id='".$id."' and `prod_name`='".$prod."' and `link`='".$link."'";
             $result= $this->conn->query($sql);

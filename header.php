@@ -27,7 +27,8 @@
 									<a href="services.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hosting<i class="caret"></i></a>
 									<ul class="dropdown-menu">
 									<?php foreach($cd as $key=>$cdd){ ?>
-										<li><a href="<?php echo $cdd['link'];?>"><?php echo $cdd['prod_name'];?></a></li>
+										
+										<li><a href="<?php echo "catpage.php?id=".$cdd['id'].""; ?>"data-id=<?php echo$cdd['id'];?> class="category"><?php echo $cdd['prod_name'];?></a></li>
 									<?php } ?>			
 									</ul>
 										
@@ -49,3 +50,4 @@
 			</div>
 		</div>
 	<!---header--->
+	
