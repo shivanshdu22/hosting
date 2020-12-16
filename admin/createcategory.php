@@ -49,7 +49,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/argon.css?v=1.2.0" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   
+    <script src="https://cdn.tiny.cloud/1/hpxqthti5vs5bqd84v0hhwx68rm9ozso6qtxlqsrt0au2oc5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 
 <body>
@@ -75,8 +75,8 @@
                     <p class="error" id="sub"></p>
                 </div>
                 <div class="form-group">
-                    <label for="link" class="form-control-label text-blue">Link</label>
-                    <input class="form-control" name="link" type="text" placeholder="Link" id="link" >
+                    <label for="link" class="form-control-label text-blue">HTML</label>
+                    <textarea class="form-control" name="link" type="text" placeholder="" id="link" ></textarea>
                    
                 </div>
                 <div id="available" class="form-group text-blue">
@@ -96,16 +96,16 @@
       </div>
       <div class="row mt-5">
         <div class="col">
-            <h1 class="text-blue">Category Table</h1>
-            <table id="categorytable" class="table table-borderless table-hover">
-                <thead class="blue h3">
-                    <th>ID</th>
-                    <th>Parent Category</th>
-                    <th>Name</th>
-                    <th>Link</th>
-                    <th>Availablity</th>
-                    <th>Date of Launch</th>
-                    <th>Option</th>
+            <h1 class="text-white">Category Table</h1>
+            <table id="categorytable" class="table  table-hover table-dark">
+                <thead class="h3 text-white bg-blue">
+                    <th class="h4 text-white">ID</th>
+                    <th class="h4 text-white">Parent Category</th>
+                    <th class="h4 text-white">Name</th>
+                    <th class="h4 text-white">HTML</th>
+                    <th class="h4 text-white">Availablity</th>
+                    <th class="h4 text-white">Date of Launch</th>
+                    <th class="h4 text-white">Option</th>
                 </thead>
                 <tbody>
                 <?php
@@ -114,7 +114,7 @@
 							<td><id><?php echo $udd['id'];?></id></td>
                             <td><parent><?php if($udd['prod_parent_id']==1){echo "Hosting";} else{echo "Unknow Category";}?></parent></td>
                             <td><name><?php echo $udd['prod_name'];?></name></td>
-                            <td><lik><?php echo $udd['link'];?></lik></td>
+                            <td><lik><?php echo $udd['html'];?></lik></td>
                             <td><avail><?php if($udd['prod_available']==1){echo "Available";} else{echo "Unavailable";}?></avail></td>
                             <td><?php echo $udd['prod_launch_date'];?></td>   
                             <td>
@@ -255,6 +255,14 @@
                   else{
                     return false;
                   }
+          });
+          tinymce.init({
+            selector: '#link',
+            plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+            toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
           });
          });
     </script>

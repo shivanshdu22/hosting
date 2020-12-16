@@ -7,8 +7,6 @@
   	include "productclass.php";
   	$user= new User();
   	$product= new Product(); 
-	
-	
   ?>
 <!DOCTYPE HTML>
 <html>

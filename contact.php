@@ -10,6 +10,7 @@
 	
 	
   ?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -51,7 +52,7 @@
 								</div>
 								<div class="col-md-4 contact-left">
 									<h4>Address</h4>
-									<p>est eligendi optio cumque nihil impedit quo minus id quod maxime
+									<p>
 										<span>26 56D Rescue,US</span></p>
 									<ul>
 										<li>Free Phone :+1 078 4589 2456</li>

@@ -167,7 +167,7 @@
                     <th>ID</th>
                     <th>Parent Category</th>
                     <th>Name</th>
-                    <th>Link</th>
+                    <th>HTML</th>
                     <th>Availablity</th>
                     <th>Date of Launch</th>
                     <th>Webspace</th>
@@ -187,7 +187,7 @@
 							<td><id><?php echo $udd['id'];?></id></td>
                             <td><parent><?php foreach($nd as $k=>$m){if($m['id']==$udd['prod_parent_id']){echo $m['prod_name'];}}?></parent></td>
                             <td><name><?php echo $udd['prod_name'];?></name></td>
-                            <td><lik><?php echo $udd['link'];?></lik></td>
+                            <td><lik><?php echo $udd['html'];?></lik></td>
                             <td><avail><?php if($udd['prod_available']==1){echo "Available";} else{echo "Unavailable";}?></avail></td>
                             <td><?php echo $udd['prod_launch_date'];?></td>   
                             <?php $u=0; $arr = (array) json_decode($udd['description'],true); 
@@ -296,7 +296,7 @@
                     return false;
                   }
                 });
-         });
+         
          
         
           $(".error").text("Please fill this field");
@@ -519,7 +519,6 @@
           });
           $("#domain").on("blur paste", function(event) {
             var text = document.getElementById("domain").value;	
-           	
             if(text!=""){
               var categoryregex = new RegExp("");
               var categoryregex1 = new RegExp("");
@@ -537,27 +536,34 @@
               $("#domain").css({"border": "1px solid red"});
             }
           });
-            $("#mail").on("blur paste", function(event) {
+          $("#mail").on("blur paste", function(event) {
               var mail = document.getElementById("mail").value;
-            if(mail!=""){
-              var categoryregex = new RegExp("^[0-9]+$");
-              var categoryregex1 = new RegExp("^[a-zA-Z]+$");
-              if (categoryregex.test(mail)||categoryregex1.test(mail)){
-								$("#mailer").html("");
-                $("#mail").css({"border": "1px solid green"});
+              if(mail!=""){
+                var categoryregex = new RegExp("^[0-9]+$");
+                var categoryregex1 = new RegExp("^[a-zA-Z]+$");
+                if (categoryregex.test(mail)||categoryregex1.test(mail)){
+                  $("#mailer").html("");
+                  $("#mail").css({"border": "1px solid green"});
+                }
+                else{
+                  $("#mailer").html("Invalid");
+                  $("#mail").css({"border": "1px solid red"});
+                }
               }
               else{
-                $("#mailer").html("Invalid");
+                $("#mailer").html("Please fill this field");
                 $("#mail").css({"border": "1px solid red"});
               }
-            }
-            else{
-              $("#mailer").html("Please fill this field");
-              $("#mail").css({"border": "1px solid red"});
-            }
           });
-
-        
-   
+          $(":button").click(function(){
+              if(webc==1 && bandc==1 && monc==1 && annualc==1 && productc==1 && sku==1 && mailc==1 && domain==1 && stack==1)
+              {
+                $("button[name='submit']").prop("type", "submit");
+              }	
+              else{
+                return false;
+              }
+          });
+        });             
     </script>
 </html>

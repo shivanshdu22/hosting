@@ -20,7 +20,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse mt-5" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav">
-								<li class="active"><a href="index.php">Home <i class="sr-only">(current)</i></a></li>
+								<li <?php if($_SERVER['REQUEST_URI']=='hosting/index.php') { echo ("class='active'");} ?>><a href="index.php">Home <i class="sr-only">(current)</i></a></li>
 								<li><a href="about.php">About</a></li>
 								<li><a href="services.php">Services</a></li>
 								<li class="dropdown">
@@ -36,7 +36,17 @@
 								<li><a href="pricing.php">Pricing</a></li>
 								<li><a href="blog.php">Blog</a></li>
 								<li><a href="contact.php">Contact</a></li>
-								<li><a href="contact.php"><i class="fa fa-shopping-cart " aria-hidden="true"></i></a></li>
+								<li><a href="cart.php"><span class="fa-stack has-badge" data-count="<?php if(isset($_SESSION['cart'])){
+                                    $u=0;
+                                    foreach ($_SESSION['cart'] as $k1 =>$cartd) {
+                                        $u++;
+                                    }
+                                    echo $u;
+								}
+								else{ echo 0; }?>">
+															<i class="fa fa-circle fa-stack-2x fa-inverse"></i>
+  															<i style="" class="fa fa-shopping-cart fa-stack-2x red-cart"></i>
+														</span></a></li>
 								<?php if(isset($_SESSION['userdata'])){ ?>
 								<li><a href="signout.php">Logout</a></li>
 								<?php } else {?>

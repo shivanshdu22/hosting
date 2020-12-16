@@ -12,7 +12,7 @@ class Product extends DatabaseClass
             }
         else{
             if ($link!=""){
-                $sql = "INSERT INTO tbl_product (prod_parent_id,prod_name, link, prod_launch_date) VALUES ('1','".$prod."', '".$link."','".date("Y/m/d h:i:s")."')";
+                $sql = "INSERT INTO tbl_product (prod_parent_id,prod_name, html, prod_launch_date) VALUES ('1','".$prod."', '".$link."','".date("Y/m/d h:i:s")."')";
                 $result= $this->conn->query($sql);
                 return "Category added!";
             }
@@ -27,7 +27,7 @@ class Product extends DatabaseClass
     public function addproduct($parent_id,$prod,$link,$desc,$mon_price,$annual_price,$sku)  
     {  
         date_default_timezone_set('Asia/Kolkata');
-        $sql = "INSERT INTO tbl_product (prod_parent_id,prod_name, link, prod_launch_date) VALUES ('".$parent_id."','".$prod."', '".$link."','".date("Y/m/d h:i:s")."')";
+        $sql = "INSERT INTO tbl_product (prod_parent_id,prod_name, html, prod_launch_date) VALUES ('".$parent_id."','".$prod."', '".$link."','".date("Y/m/d h:i:s")."')";
         $result= $this->conn->query($sql);
         $last_id = $this->conn->insert_id;
         
@@ -38,7 +38,7 @@ class Product extends DatabaseClass
     public function updateproduct($id,$pid,$prod,$link,$desc,$mon_price,$annual,$sku,$avail)  
     {  
         date_default_timezone_set('Asia/Kolkata');
-        $sql= "UPDATE `tbl_product` SET prod_parent_id='".$pid."', `prod_name`='".$prod."', `link`='".$link."', `prod_available`='".$avail."' WHERE id='".$id."'";
+        $sql= "UPDATE `tbl_product` SET prod_parent_id='".$pid."', `prod_name`='".$prod."', `html`='".$link."', `prod_available`='".$avail."' WHERE id='".$id."'";
         echo 
         $result= $this->conn->query($sql);
         
@@ -47,13 +47,13 @@ class Product extends DatabaseClass
         return "Product update!";
     }   
     public function updatecategory($id,$prod,$link,$avail){
-            $sql= "SELECT * FROM tbl_product WHERE id='".$id."' and `prod_name`='".$prod."' and `link`='".$link."'";
+            $sql= "SELECT * FROM tbl_product WHERE id='".$id."' and `prod_name`='".$prod."' and `html`='".$link."'";
             $result= $this->conn->query($sql);
             if ($result->num_rows > 0) {
                 return "No updation Done";
             }   
             else{
-                $sql= "UPDATE `tbl_product` SET `prod_name`='".$prod."', `link`='".$link."', `prod_available`='".$avail."' WHERE id='".$id."'";
+                $sql= "UPDATE `tbl_product` SET `prod_name`='".$prod."', `html`='".$link."', `prod_available`='".$avail."' WHERE id='".$id."'";
                 $result= $this->conn->query($sql);
                 return "Update Done";
             }
