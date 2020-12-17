@@ -275,12 +275,15 @@
                 bandc=1;
               }
             }
-            else{
+            if(band==""){
               $("#bander").html("Please Fill this Field");
-              $("#webspace").css({"border": "1px solid none"});
-              $("#bandwidth").css({"border": "1px solid none"});
+              $("#bandwidth").css({"border": "1px solid red"});
             }
-            if(month!=""||annual!=""){
+            if( webspace==""){
+              $("#weber").html("");
+              $("#webspace").css({"border": "1px solid red"});
+            }
+            if(month!=""||annual!="Please Fill this Field"){
               if(len>15){
                 document.getElementById("monthly").value="";
                 $("#moner").html("Limit Exceed");
@@ -364,7 +367,7 @@
               text = text.replace(/\,{2,}/g,',');
               text = text.replace(/ {1,}/g,'');
               document.getElementById("stack").value=text;
-              var categoryregex = new RegExp("^[a-zA-Z][a-zA-z0-9\,]+[a-zA-z0-9]+$");
+              var categoryregex = new RegExp("^[a-zA-Z][a-zA-z0-9\,]+[a-zA-z]+[a-zA-z0-9]+$|^[a-zA-Z][a-zA-z0-9]+[,][a-zA-Z]+$");
               if (categoryregex.test(text)){
 								$("#stacker").html("");
                 $("#stack").css({"border": "1px solid green"});

@@ -72,7 +72,7 @@
 									<div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
 										<div class="linux-prices" id="plans">
                                         <?php foreach($pd as $key=> $udd) {
-                                                if($udd['prod_parent_id']==$_REQUEST['id']){?>
+                                                if($udd['prod_parent_id']==$_REQUEST['id']&&$udd['prod_available']=="1"){?>
 											<div class="col-md-3 linux-price">
 												<div class="linux-top">
 												<h4><?php echo $udd['prod_name']?></h4>

@@ -14,7 +14,9 @@
                 $check=isset($_POST['remember'])?$_POST['remember']:'';
             
                 $user= new User();
-                $msg=$user->login($username, $pass);
+				$msg=$user->login($username, $pass);
+				echo "<script type='text/javascript'>alert('".$msg."');</script>";
+
             }
 	
   			include "productclass.php";
